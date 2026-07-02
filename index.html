@@ -221,16 +221,30 @@
     <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.45;">
       Please enter a username that will show up on the servers.
     </p>
-    <input id="signin-name-input" type="text" placeholder="Your name…" maxlength="24"
-      style="width:100%;background:var(--lift);border:1px solid var(--rim);border-radius:8px;padding:11px 14px;
-      color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;outline:none;margin-bottom:0.9rem;"
-      onkeydown="if(event.key==='Enter')completeSignIn();">
-    <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:0.5rem;text-align:left;">
+    <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:1rem;text-align:left;">
       <input id="signin-terms-check" type="checkbox" style="margin-top:3px;flex-shrink:0;cursor:pointer;">
       <label for="signin-terms-check" style="font-size:0.75rem;color:var(--muted);line-height:1.4;cursor:pointer;">
         I accept the Terms of Use — <a href="#" onclick="event.preventDefault();document.getElementById('signin-gate').style.display='none';showPage('terms');" style="color:var(--p);text-decoration:underline;">View Terms of Use</a>
       </label>
     </div>
+
+    <button onclick="signInWithGoogle()" style="width:100%;background:#fff;color:#3c4043;border:1px solid var(--rim);border-radius:8px;
+      padding:11px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.88rem;font-weight:600;margin-bottom:1rem;
+      display:flex;align-items:center;justify-content:center;gap:10px;">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+      Continue with Google
+    </button>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+      <div style="flex:1;height:1px;background:var(--rim);"></div>
+      <span style="font-size:0.7rem;color:var(--muted);">or use a name</span>
+      <div style="flex:1;height:1px;background:var(--rim);"></div>
+    </div>
+
+    <input id="signin-name-input" type="text" placeholder="Your name…" maxlength="24"
+      style="width:100%;background:var(--lift);border:1px solid var(--rim);border-radius:8px;padding:11px 14px;
+      color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.9rem;outline:none;margin-bottom:0.9rem;"
+      onkeydown="if(event.key==='Enter')completeSignIn();">
     <p id="signin-terms-error" style="font-size:0.72rem;color:var(--r);margin-bottom:0.6rem;min-height:1em;text-align:left;"></p>
     <button onclick="completeSignIn()" style="width:100%;background:var(--p);color:#fff;border:none;border-radius:8px;
       padding:11px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.9rem;font-weight:600;">Continue</button>
@@ -677,7 +691,10 @@
       <!-- CHAT WINDOW -->
       <div style="flex:1;min-width:0;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
-          <span style="font-size:0.72rem;color:var(--muted);">Chatting as <strong id="chat-whoami" style="color:var(--p);">…</strong></span>
+          <span style="font-size:0.72rem;color:var(--muted);display:flex;align-items:center;gap:6px;">
+            <img id="chat-whoami-avatar" src="" style="width:18px;height:18px;border-radius:50%;display:none;" referrerpolicy="no-referrer">
+            Chatting as <strong id="chat-whoami" style="color:var(--p);">…</strong>
+          </span>
           <span style="font-size:0.72rem;color:var(--muted);font-weight:600;" id="channel-label"># General</span>
         </div>
 
@@ -831,8 +848,10 @@
 <!-- Firebase (for live chat) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, push, onChildAdded, query, limitToLast, serverTimestamp }
+  import { getDatabase, ref, push, onChildAdded, onChildChanged, onChildRemoved, update, remove, query, limitToLast, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup, signOut }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   // ⚠️ PASTE YOUR FIREBASE CONFIG HERE (from Firebase Console → Project settings → Your apps)
   const firebaseConfig = {
@@ -846,10 +865,11 @@
   };
 
   const NAME_KEY = 'tgames_username';
+  const AVATAR_KEY = 'tgames_avatar';
   let chatName = localStorage.getItem(NAME_KEY) || "";
-  let db, chatRef;
+  let db, chatRef, auth;
   let listening = false;
-  let unsubscribeChannel = null;
+  let unsubscribeFns = [];
 
   const CHANNELS = {
     general:  { path: 'messages/general',  label: '# General' },
@@ -861,6 +881,7 @@
   try {
     const app = initializeApp(firebaseConfig);
     db = getDatabase(app);
+    auth = getAuth(app);
     chatRef = ref(db, CHANNELS[currentChannel].path);
     document.getElementById('chat-status').textContent = "LIVE";
     initSiteNotificationListener();
@@ -869,11 +890,48 @@
     console.warn("Firebase not configured yet:", e);
   }
 
+  // ── GOOGLE SIGN-IN ──
+  window.signInWithGoogle = async function () {
+    const checkbox = document.getElementById('signin-terms-check');
+    const errorEl = document.getElementById('signin-terms-error');
+    if (!checkbox.checked) {
+      errorEl.textContent = 'You must accept the Terms of Use to continue.';
+      return;
+    }
+    if (!auth) { errorEl.textContent = 'Not connected right now.'; return; }
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const name = user.displayName || user.email || 'Player';
+      localStorage.setItem(NAME_KEY, name);
+      localStorage.setItem(AVATAR_KEY, user.photoURL || '');
+      errorEl.textContent = '';
+      document.getElementById('signin-gate').style.display = 'none';
+      if (typeof window.initChatIdentity === 'function') window.initChatIdentity();
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission().then((res) => {
+          if (res === 'granted') localStorage.setItem('tgames_notif_optout', '0');
+          if (typeof window.updateNotifToggleUI === 'function') window.updateNotifToggleUI();
+        });
+      }
+    } catch (e) {
+      console.warn('Google sign-in failed:', e);
+      errorEl.textContent = 'Google sign-in failed or was cancelled.';
+    }
+  };
+
   // Called by the shared showPage() nav function whenever the Chat page is opened
   window.initChatIdentity = function () {
     chatName = localStorage.getItem(NAME_KEY) || "";
     const who = document.getElementById('chat-whoami');
     if (who) who.textContent = chatName || '(no name set)';
+    const avatarUrl = localStorage.getItem(AVATAR_KEY) || '';
+    const avatarImg = document.getElementById('chat-whoami-avatar');
+    if (avatarImg) {
+      if (avatarUrl) { avatarImg.src = avatarUrl; avatarImg.style.display = 'inline-block'; }
+      else { avatarImg.style.display = 'none'; }
+    }
     if (!listening) { startListening(); listening = true; }
   };
 
@@ -893,7 +951,8 @@
 
     // clear and reload messages for the new channel
     document.getElementById('chat-messages').innerHTML = '';
-    if (unsubscribeChannel) { unsubscribeChannel(); unsubscribeChannel = null; }
+    unsubscribeFns.forEach(fn => fn());
+    unsubscribeFns = [];
     chatRef = ref(db, CHANNELS[id].path);
     startListening();
   };
@@ -902,7 +961,8 @@
     const input = document.getElementById('chat-msg-input');
     const text = input.value.trim();
     if (!text || !chatRef || !chatName) return;
-    push(chatRef, { name: chatName, text, ts: serverTimestamp() });
+    const avatar = localStorage.getItem(AVATAR_KEY) || '';
+    push(chatRef, { name: chatName, text, avatar, ts: serverTimestamp() });
     input.value = '';
   };
 
@@ -917,20 +977,66 @@
     return dateStr + ', ' + timeStr;
   }
 
+  function renderMessageRow(key, msg) {
+    const row = document.createElement('div');
+    row.dataset.key = key;
+    row.style.cssText = "font-size:0.85rem;line-height:1.4;display:flex;align-items:flex-start;gap:8px;";
+    const isMe = msg.name === chatName;
+    const timeStr = formatTimestamp(msg.ts);
+    const editedTag = msg.edited ? ' <span style="color:var(--muted);font-size:0.68rem;font-style:italic;">(edited)</span>' : '';
+    const avatarHtml = msg.avatar
+      ? `<img src="${escapeHtml(msg.avatar)}" style="width:22px;height:22px;border-radius:50%;flex-shrink:0;margin-top:1px;" referrerpolicy="no-referrer">`
+      : `<div style="width:22px;height:22px;border-radius:50%;flex-shrink:0;margin-top:1px;background:${isMe ? 'var(--p)' : 'var(--c)'};"></div>`;
+    const controlsHtml = isMe
+      ? ` <span style="margin-left:4px;">
+          <button onclick="editMessage('${key}')" title="Edit" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">✏️</button>
+          <button onclick="deleteMessage('${key}')" title="Delete" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">🗑️</button>
+        </span>`
+      : '';
+    row.innerHTML = `${avatarHtml}<span class="msg-text"><span style="font-weight:700;color:${isMe ? 'var(--p)' : 'var(--c)'}">${escapeHtml(msg.name)}:</span> <span class="msg-body" style="color:var(--text)">${escapeHtml(msg.text)}</span> <span style="color:var(--muted);font-size:0.72rem;margin-left:4px;">${timeStr}</span>${editedTag}${controlsHtml}</span>`;
+    return row;
+  }
+
+  window.editMessage = function (key) {
+    const box = document.getElementById('chat-messages');
+    const row = box.querySelector(`[data-key="${key}"] .msg-body`);
+    const currentText = row ? row.textContent : '';
+    const newText = prompt('Edit your message:', currentText);
+    if (newText === null) return;
+    const trimmed = newText.trim();
+    if (!trimmed || !db) return;
+    update(ref(db, CHANNELS[currentChannel].path + '/' + key), { text: trimmed, edited: true });
+  };
+
+  window.deleteMessage = function (key) {
+    if (!db) return;
+    if (!confirm('Delete this message?')) return;
+    remove(ref(db, CHANNELS[currentChannel].path + '/' + key));
+  };
+
   function startListening() {
     if (!chatRef) return;
     const recentQuery = query(chatRef, limitToLast(50));
-    unsubscribeChannel = onChildAdded(recentQuery, (snap) => {
-      const msg = snap.val();
-      const box = document.getElementById('chat-messages');
-      const row = document.createElement('div');
-      row.style.cssText = "font-size:0.85rem;line-height:1.4;";
-      const isMe = msg.name === chatName;
-      const timeStr = formatTimestamp(msg.ts);
-      row.innerHTML = `<span style="font-weight:700;color:${isMe ? 'var(--p)' : 'var(--c)'}">${escapeHtml(msg.name)}:</span> <span style="color:var(--text)">${escapeHtml(msg.text)}</span> <span style="color:var(--muted);font-size:0.72rem;margin-left:4px;">${timeStr}</span>`;
+    const box = document.getElementById('chat-messages');
+
+    const unsubAdd = onChildAdded(recentQuery, (snap) => {
+      const row = renderMessageRow(snap.key, snap.val());
       box.appendChild(row);
       box.scrollTop = box.scrollHeight;
     });
+
+    const unsubChange = onChildChanged(recentQuery, (snap) => {
+      const existing = box.querySelector(`[data-key="${snap.key}"]`);
+      const newRow = renderMessageRow(snap.key, snap.val());
+      if (existing) existing.replaceWith(newRow);
+    });
+
+    const unsubRemove = onChildRemoved(recentQuery, (snap) => {
+      const existing = box.querySelector(`[data-key="${snap.key}"]`);
+      if (existing) existing.remove();
+    });
+
+    unsubscribeFns.push(unsubAdd, unsubChange, unsubRemove);
   }
 
   function escapeHtml(str) {
@@ -1142,6 +1248,7 @@
       return;
     }
     localStorage.setItem('tgames_username', name);
+    localStorage.removeItem('tgames_avatar');
     status.style.color = 'var(--g)';
     status.textContent = 'Username updated!';
     if (typeof window.initChatIdentity === 'function') window.initChatIdentity();
