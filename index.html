@@ -159,6 +159,11 @@
       transition:transform 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.3); }
     .toggle-switch.on .toggle-knob { transform:translateX(20px); }
 
+    /* PING BADGE */
+    .ping-badge { display:inline-flex; align-items:center; justify-content:center; min-width:16px; height:16px;
+      padding:0 4px; background:#ff3b3b; color:#fff; border-radius:999px; font-size:0.62rem; font-weight:700;
+      margin-left:6px; vertical-align:middle; }
+
     /* DIVIDER */
     hr.divider { border:none; border-top:1px solid var(--rim); }
 
@@ -260,7 +265,7 @@
     <button class="nav-btn" id="nav-platform" onclick="showPage('platform')">Platformer</button>
     <button class="nav-btn" id="nav-logic" onclick="showPage('logic')">Logic</button>
     <button class="nav-btn" id="nav-requested" onclick="showPage('requested')">Requested</button>
-    <button class="nav-btn" id="nav-chat" onclick="showPage('chat')">Chat</button>
+    <button class="nav-btn" id="nav-chat" onclick="showPage('chat')">Chat<span id="nav-chat-badge" class="ping-badge" style="display:none;">0</span></button>
     <button class="nav-btn" id="nav-settings" onclick="showPage('settings')">Settings</button>
   </div>
   <button onclick="openSearch()" title="Search games" style="background:none;border:none;color:var(--text);cursor:pointer;
@@ -674,17 +679,22 @@
         <button class="channel-btn active" id="channel-btn-general" onclick="switchChannel('general')"
           style="display:block;width:100%;text-align:left;background:var(--lift);border:none;border-radius:6px;
           padding:9px 10px;margin-bottom:4px;cursor:pointer;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;">
-          # General
+          # General<span id="channel-badge-general" class="ping-badge" style="display:none;">0</span>
         </button>
         <button class="channel-btn" id="channel-btn-trelated" onclick="switchChannel('trelated')"
           style="display:block;width:100%;text-align:left;background:none;border:none;border-radius:6px;
           padding:9px 10px;margin-bottom:4px;cursor:pointer;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;">
-          # T- related
+          # T- related<span id="channel-badge-trelated" class="ping-badge" style="display:none;">0</span>
         </button>
         <button class="channel-btn" id="channel-btn-other" onclick="switchChannel('other')"
           style="display:block;width:100%;text-align:left;background:none;border:none;border-radius:6px;
+          padding:9px 10px;margin-bottom:4px;cursor:pointer;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;">
+          # Other<span id="channel-badge-other" class="ping-badge" style="display:none;">0</span>
+        </button>
+        <button class="channel-btn" id="channel-btn-announcements" onclick="switchChannel('announcements')"
+          style="display:block;width:100%;text-align:left;background:none;border:none;border-radius:6px;
           padding:9px 10px;cursor:pointer;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:0.82rem;font-weight:600;">
-          # Other
+          📢 Announcements<span id="channel-badge-announcements" class="ping-badge" style="display:none;">0</span>
         </button>
       </div>
 
@@ -701,11 +711,20 @@
         <div id="chat-window">
           <div id="chat-messages" style="background:var(--paper);border:1px solid var(--rim);border-radius:var(--rad);
             height:50vh;min-height:320px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;margin-bottom:0.75rem;"></div>
-          <div style="display:flex;gap:8px;">
+          <div id="reply-preview" style="display:none;align-items:center;justify-content:space-between;background:var(--lift);
+            border:1px solid var(--rim);border-radius:8px;padding:7px 10px;margin-bottom:6px;font-size:0.75rem;color:var(--muted);">
+            <span id="reply-preview-text"></span>
+            <button onclick="cancelReply()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.85rem;">✕</button>
+          </div>
+          <div style="display:flex;gap:8px;" id="chat-input-row">
             <input id="chat-msg-input" type="text" placeholder="Say something…" maxlength="500"
               style="flex:1;background:var(--lift);border:1px solid var(--rim);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.85rem;outline:none;"
               onkeydown="if(event.key==='Enter')chatSend();">
             <button onclick="chatSend()" style="background:var(--p);color:#fff;border:none;border-radius:8px;padding:10px 18px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:0.85rem;font-weight:600;">Send</button>
+          </div>
+          <div id="chat-no-permission" style="display:none;background:var(--lift);border:1px solid var(--rim);border-radius:8px;
+            padding:10px 14px;font-size:0.82rem;color:var(--muted);text-align:center;">
+            You do not have permission to send messages in this server.
           </div>
         </div>
       </div>
@@ -862,7 +881,7 @@
 <!-- Firebase (for live chat) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getDatabase, ref, push, onChildAdded, onChildChanged, onChildRemoved, update, remove, query, limitToLast, serverTimestamp }
+  import { getDatabase, ref, push, onChildAdded, onChildChanged, onChildRemoved, onValue, update, remove, query, limitToLast, serverTimestamp }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
   import { getAuth, GoogleAuthProvider, signInWithPopup, signOut }
     from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -880,17 +899,24 @@
 
   const NAME_KEY = 'tgames_username';
   const AVATAR_KEY = 'tgames_avatar';
+  const EMAIL_KEY = 'tgames_email';
+  const ADMIN_EMAIL = 'gregw246810@gmail.com';
   let chatName = localStorage.getItem(NAME_KEY) || "";
   let db, chatRef, auth;
   let listening = false;
   let unsubscribeFns = [];
 
   const CHANNELS = {
-    general:  { path: 'messages/general',  label: '# General' },
-    trelated: { path: 'messages/trelated', label: '# T- related' },
-    other:    { path: 'messages/other',    label: '# Other' }
+    general:      { path: 'messages/general',      label: '# General' },
+    trelated:     { path: 'messages/trelated',     label: '# T- related' },
+    other:        { path: 'messages/other',        label: '# Other' },
+    announcements:{ path: 'messages/announcements', label: '# Announcements' }
   };
   let currentChannel = 'general';
+
+  function isAdmin() {
+    return localStorage.getItem(EMAIL_KEY) === ADMIN_EMAIL;
+  }
 
   try {
     const app = initializeApp(firebaseConfig);
@@ -914,6 +940,7 @@
       const name = user.displayName || user.email || 'Player';
       localStorage.setItem(NAME_KEY, name);
       localStorage.setItem(AVATAR_KEY, user.photoURL || '');
+      localStorage.setItem(EMAIL_KEY, user.email || '');
       if (typeof window.initChatIdentity === 'function') window.initChatIdentity();
       if ('Notification' in window && Notification.permission === 'default') {
         Notification.requestPermission().then((res) => {
@@ -960,7 +987,89 @@
     );
   };
 
+  // ── REPLIES & PINGS ──
+  let replyingTo = null; // { key, name, text }
+  let currentPings = {}; // pushId -> { channel, fromName, snippet, ts }
+  let pingListenerUnsub = null;
+  let lastPingName = null;
+
+  function sanitizeKey(str) {
+    return String(str).replace(/[.#$\[\]\/]/g, '_');
+  }
+
+  function updatePingBadges() {
+    const byChannel = { general: 0, trelated: 0, other: 0 };
+    let total = 0;
+    Object.values(currentPings).forEach(p => {
+      if (byChannel[p.channel] !== undefined) { byChannel[p.channel]++; total++; }
+    });
+    const navBadge = document.getElementById('nav-chat-badge');
+    if (navBadge) {
+      navBadge.textContent = total;
+      navBadge.style.display = total > 0 ? 'inline-flex' : 'none';
+    }
+    Object.keys(byChannel).forEach(ch => {
+      const el = document.getElementById('channel-badge-' + ch);
+      if (!el) return;
+      el.textContent = byChannel[ch];
+      el.style.display = byChannel[ch] > 0 ? 'inline-flex' : 'none';
+    });
+  }
+
+  function attachPingListener() {
+    if (!db || !chatName) return;
+    if (pingListenerUnsub && lastPingName === chatName) return; // already listening for this identity
+    if (pingListenerUnsub) pingListenerUnsub();
+    lastPingName = chatName;
+    const pingsRef = ref(db, 'pings/' + sanitizeKey(chatName));
+    pingListenerUnsub = onValue(pingsRef, (snap) => {
+      currentPings = snap.val() || {};
+      updatePingBadges();
+      // if currently viewing the Chat page on the channel a ping just arrived for, clear it immediately
+      const chatPage = document.getElementById('page-chat');
+      if (chatPage && chatPage.classList.contains('active')) {
+        clearPingsForChannel(currentChannel);
+      }
+    });
+  }
+
+  function clearPingsForChannel(channelId) {
+    if (!db || !chatName) return;
+    Object.entries(currentPings).forEach(([pushId, p]) => {
+      if (p.channel === channelId) {
+        remove(ref(db, 'pings/' + sanitizeKey(chatName) + '/' + pushId));
+      }
+    });
+  }
+
+  window.startReply = function (key, name, text) {
+    replyingTo = { key, name, text: text.slice(0, 80) };
+    const bar = document.getElementById('reply-preview');
+    const label = document.getElementById('reply-preview-text');
+    if (bar && label) {
+      label.textContent = 'Replying to ' + name + ': "' + replyingTo.text + '"';
+      bar.style.display = 'flex';
+    }
+    const input = document.getElementById('chat-msg-input');
+    if (input) input.focus();
+  };
+
+  window.cancelReply = function () {
+    replyingTo = null;
+    const bar = document.getElementById('reply-preview');
+    if (bar) bar.style.display = 'none';
+  };
+
   // Called by the shared showPage() nav function whenever the Chat page is opened
+  function updateInputPermission() {
+    const row = document.getElementById('chat-input-row');
+    const noPerm = document.getElementById('chat-no-permission');
+    if (!row || !noPerm) return;
+    const blocked = currentChannel === 'announcements' && !isAdmin();
+    row.style.display = blocked ? 'none' : 'flex';
+    noPerm.style.display = blocked ? 'block' : 'none';
+  }
+
   window.initChatIdentity = function () {
     chatName = localStorage.getItem(NAME_KEY) || "";
     const who = document.getElementById('chat-whoami');
@@ -972,11 +1081,15 @@
       else { avatarImg.style.display = 'none'; }
     }
     if (!listening) { startListening(); listening = true; }
+    attachPingListener();
+    clearPingsForChannel(currentChannel);
+    updateInputPermission();
   };
 
   window.switchChannel = function (id) {
     if (!CHANNELS[id] || id === currentChannel) return;
     currentChannel = id;
+    cancelReply();
 
     // update sidebar active state
     Object.keys(CHANNELS).forEach(key => {
@@ -994,15 +1107,57 @@
     unsubscribeFns = [];
     chatRef = ref(db, CHANNELS[id].path);
     startListening();
+    clearPingsForChannel(id);
+    updateInputPermission();
   };
+
+  const MENTION_REGEX = /@([A-Za-z0-9_.-]+)/g;
 
   window.chatSend = function () {
     const input = document.getElementById('chat-msg-input');
     const text = input.value.trim();
     if (!text || !chatRef || !chatName) return;
+    if (currentChannel === 'announcements' && !isAdmin()) {
+      updateInputPermission();
+      return;
+    }
     const avatar = localStorage.getItem(AVATAR_KEY) || '';
-    push(chatRef, { name: chatName, text, avatar, ts: serverTimestamp() });
+    const msgData = { name: chatName, text, avatar, ts: serverTimestamp() };
+    if (replyingTo) msgData.replyTo = { name: replyingTo.name, text: replyingTo.text };
+    push(chatRef, msgData).catch((e) => {
+      console.warn('Send failed:', e);
+      updateInputPermission();
+    });
+
+    // ping the person being replied to (unless replying to yourself)
+    if (replyingTo && replyingTo.name && replyingTo.name !== chatName) {
+      push(ref(db, 'pings/' + sanitizeKey(replyingTo.name)), {
+        channel: currentChannel,
+        fromName: chatName,
+        snippet: text.slice(0, 80),
+        ts: Date.now()
+      });
+    }
+
+    // ping anyone @mentioned in the message (unless they mentioned themselves)
+    const mentioned = new Set();
+    let match;
+    MENTION_REGEX.lastIndex = 0;
+    while ((match = MENTION_REGEX.exec(text)) !== null) {
+      const mentionedName = match[1];
+      if (mentionedName && mentionedName !== chatName && !mentioned.has(mentionedName)) {
+        mentioned.add(mentionedName);
+        push(ref(db, 'pings/' + sanitizeKey(mentionedName)), {
+          channel: currentChannel,
+          fromName: chatName,
+          snippet: text.slice(0, 80),
+          ts: Date.now()
+        });
+      }
+    }
+
     input.value = '';
+    cancelReply();
   };
 
   function formatTimestamp(ts) {
@@ -1026,14 +1181,24 @@
     const avatarHtml = msg.avatar
       ? `<img src="${escapeHtml(msg.avatar)}" style="width:22px;height:22px;border-radius:50%;flex-shrink:0;margin-top:1px;" referrerpolicy="no-referrer">`
       : `<div style="width:22px;height:22px;border-radius:50%;flex-shrink:0;margin-top:1px;background:${isMe ? 'var(--p)' : 'var(--c)'};"></div>`;
-    const controlsHtml = isMe
-      ? ` <span style="margin-left:4px;">
-          <button onclick="editMessage('${key}')" title="Edit" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">✏️</button>
-          <button onclick="deleteMessage('${key}')" title="Delete" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">🗑️</button>
-        </span>`
+    const editDeleteHtml = isMe
+      ? `<button onclick="editMessage('${key}')" title="Edit" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">✏️</button>
+         <button onclick="deleteMessage('${key}')" title="Delete" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">🗑️</button>`
       : '';
-    row.innerHTML = `${avatarHtml}<span class="msg-text"><span style="font-weight:700;color:${isMe ? 'var(--p)' : 'var(--c)'}">${escapeHtml(msg.name)}:</span> <span class="msg-body" style="color:var(--text)">${escapeHtml(msg.text)}</span> <span style="color:var(--muted);font-size:0.72rem;margin-left:4px;">${timeStr}</span>${editedTag}${controlsHtml}</span>`;
+    const replyBtnHtml = `<button class="reply-btn" data-name="${escapeAttr(msg.name)}" data-text="${escapeAttr(msg.text)}"
+        onclick="startReply('${key}', this.dataset.name, this.dataset.text)" title="Reply"
+        style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.72rem;padding:0 2px;">↩️</button>`;
+    const quoteHtml = msg.replyTo
+      ? `<div style="font-size:0.72rem;color:var(--muted);border-left:2px solid var(--rim);padding-left:6px;margin-bottom:2px;">
+          ↩️ ${escapeHtml(msg.replyTo.name)}: "${escapeHtml(msg.replyTo.text)}"
+        </div>`
+      : '';
+    row.innerHTML = `${avatarHtml}<span class="msg-text">${quoteHtml}<span style="font-weight:700;color:${isMe ? 'var(--p)' : 'var(--c)'}">${escapeHtml(msg.name)}:</span> <span class="msg-body" style="color:var(--text)">${highlightMentions(escapeHtml(msg.text))}</span> <span style="color:var(--muted);font-size:0.72rem;margin-left:4px;">${timeStr}</span>${editedTag} <span style="margin-left:4px;">${replyBtnHtml}${editDeleteHtml}</span></span>`;
     return row;
+  }
+
+  function highlightMentions(escapedText) {
+    return escapedText.replace(/@([A-Za-z0-9_.-]+)/g, '<span style="color:var(--p);font-weight:600;">@$1</span>');
   }
 
   window.editMessage = function (key) {
@@ -1082,6 +1247,10 @@
     const d = document.createElement('div');
     d.textContent = str;
     return d.innerHTML;
+  }
+
+  function escapeAttr(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   // ── SITE NOTIFICATIONS ──
@@ -1288,6 +1457,7 @@
     }
     localStorage.setItem('tgames_username', name);
     localStorage.removeItem('tgames_avatar');
+    localStorage.removeItem('tgames_email');
     status.style.color = 'var(--g)';
     status.textContent = 'Username updated!';
     if (typeof window.initChatIdentity === 'function') window.initChatIdentity();
