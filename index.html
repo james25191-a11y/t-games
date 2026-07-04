@@ -1034,6 +1034,26 @@
     return String(str).replace(/[.#$\[\]\/]/g, '_');
   }
 
+  // Previously knownNames only picked up names from messages the sender had
+  // personally scrolled through in whichever channel(s) they'd opened this
+  // session — so @mentioning or @everyone-pinging someone who only posts in
+  // a different channel silently did nothing (the ping was never sent at
+  // all). This does a one-time read across every channel on load to seed
+  // knownNames properly, independent of which channels the sender has viewed.
+  function primeKnownNames() {
+    if (!db) return;
+    Object.values(CHANNELS).forEach(({ path }) => {
+      const q = query(ref(db, path), limitToLast(50));
+      const unsub = onValue(q, (snap) => {
+        snap.forEach(child => {
+          const msg = child.val();
+          if (msg && msg.name) knownNames.add(msg.name);
+        });
+        unsub();
+      });
+    });
+  }
+
   function updatePingBadges() {
     const byChannel = { general: 0, trelated: 0, other: 0, announcements: 0 };
     let total = 0;
@@ -1085,6 +1105,14 @@
       }
     });
   }
+
+  // Start listening for pings immediately for returning users (chatName already
+  // saved from a previous session), rather than waiting for them to open the
+  // Chat page. Without this, the listener that feeds the nav bar badge never
+  // attaches until Chat is opened, so pings sent while someone is browsing
+  // elsewhere in the site never show up as a red (1) on the top nav button.
+  if (chatName) attachPingListener();
+  primeKnownNames();
 
   window.startReply = function (key, name, text) {
     replyingTo = { key, name, text: text.slice(0, 80) };
