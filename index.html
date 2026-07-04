@@ -164,6 +164,12 @@
       padding:0 4px; background:#ff3b3b; color:#fff; border-radius:999px; font-size:0.62rem; font-weight:700;
       margin-left:6px; vertical-align:middle; }
 
+    /* MESSAGE HOVER CONTROLS */
+    .msg-controls { opacity:0; transition:opacity 0.12s; }
+    .msg-row:hover .msg-controls { opacity:1; }
+    .msg-row .msg-controls button { pointer-events:none; }
+    .msg-row:hover .msg-controls button { pointer-events:auto; }
+
     /* DIVIDER */
     hr.divider { border:none; border-top:1px solid var(--rim); }
 
@@ -321,15 +327,15 @@
     <div class="game-grid">
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/1/', 'Five Nights at Freddys')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🐻</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Five Nights at Freddy's</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
+        <div class="tile-body"><div class="tile-name">Five Nights at Freddy's</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/1/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://oma1.netlify.app', 'Granny')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">👵</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Granny</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Stealth</span></div></div>
+        <div class="tile-body"><div class="tile-name">Granny</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://oma1.netlify.app','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Stealth</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://frontroom.netlify.app', 'Backrooms')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🟨</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Backrooms</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Explore</span></div></div>
+        <div class="tile-body"><div class="tile-name">Backrooms</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://frontroom.netlify.app','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Explore</span></div></div>
       </div>
     </div>
   </div>
@@ -341,22 +347,22 @@
       <button class="nav-btn" style="padding:3px 12px;font-size:0.68rem;" onclick="showPage('platform')">See all →</button>
     </div>
     <div class="game-grid">
-      <div class="tile stripe-p" onclick="launchGame('https://incrediblewebsite.github.io/ovo/', 'OvO')">
+      <div class="tile stripe-p" onclick="launchGame('https://james25191-a11y.github.io/t-games/OvO/', 'OvO')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🥚</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">OvO</div><div class="tile-tags"><span class="ttag ttag-p">Platformer</span></div></div>
+        <div class="tile-body"><div class="tile-name">OvO</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/OvO/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Platformer</span></div></div>
       </div>
       <div class="tile stripe-g" onclick="launchGame('https://jeremywoodland.github.io/didish/', 'Dadish')">
         <div class="tile-art"><div class="tile-art-bg art-bg-g"></div><span class="tile-emoji">🥬</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Dadish</div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span></div></div>
+        <div class="tile-body"><div class="tile-name">Dadish</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/didish/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span></div></div>
       </div>
       <div class="tile stripe-g" onclick="launchGame('https://jeremywoodland.github.io/ra/', 'Dadish 2')">
         <div class="tile-art"><div class="tile-art-bg art-bg-g"></div><span class="tile-emoji">🥬</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Dadish 2</div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span></div></div>
+        <div class="tile-body"><div class="tile-name">Dadish 2</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/ra/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span></div></div>
       </div>
-      <div class="tile stripe-r" onclick="launchGame('https://jeremywoodland.github.io/fggf/', 'Level Devil')">
+      <div class="tile stripe-r" onclick="launchGame('https://james25191-a11y.github.io/t-games/level%20devil/', 'Level Devil')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">😈</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Level Devil</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/fggf/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/level%20devil/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-p">Platformer</span></div></div>
       </div>
     </div>
@@ -371,15 +377,15 @@
     <div class="game-grid">
       <div class="tile stripe-p" onclick="launchGame('https://james25191-a11y.github.io/stickmanacrchers/', 'Stickman Archers')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🏹</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Stickman Archers</div><div class="tile-tags"><span class="ttag ttag-p">Logic</span></div></div>
+        <div class="tile-body"><div class="tile-name">Stickman Archers</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/stickmanacrchers/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Logic</span></div></div>
       </div>
       <div class="tile stripe-p" onclick="launchGame('https://incrediblewebsite.github.io/factoryballsforever/', 'Factory Balls')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">⚙️</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Factory Balls</div><div class="tile-tags"><span class="ttag ttag-p">Puzzle</span></div></div>
+        <div class="tile-body"><div class="tile-name">Factory Balls</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/factoryballsforever/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Puzzle</span></div></div>
       </div>
       <div class="tile stripe-p" onclick="launchGame('https://minesw.netlify.app', 'Minesweeper')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">💣</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Minesweeper</div><div class="tile-tags"><span class="ttag ttag-p">Logic</span></div></div>
+        <div class="tile-body"><div class="tile-name">Minesweeper</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://minesw.netlify.app','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Logic</span></div></div>
       </div>
     </div>
   </div>
@@ -404,35 +410,35 @@
     <div class="game-grid">
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/1/', 'Five Nights at Freddys')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🐻</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Five Nights at Freddy's</div><div class="tile-desc">Guard Freddy's pizzeria 12am–6am. Watch the cameras. Don't run out of power.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 1</span></div></div>
+        <div class="tile-body"><div class="tile-name">Five Nights at Freddy's</div><div class="tile-desc">Guard Freddy's pizzeria 12am–6am. Watch the cameras. Don't run out of power.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/1/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 1</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/2/', 'FNAF 2')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🐻</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">FNAF 2</div><div class="tile-desc">New location, new animatronics. Watch the vents. Earn $108 per week if you survive.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 2</span></div></div>
+        <div class="tile-body"><div class="tile-name">FNAF 2</div><div class="tile-desc">New location, new animatronics. Watch the vents. Earn $108 per week if you survive.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/2/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 2</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/3/', 'FNAF 3')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🐇</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">FNAF 3</div><div class="tile-desc">Now a horror amusement park. Block vents with cameras. Only one vent at a time.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 3</span></div></div>
+        <div class="tile-body"><div class="tile-name">FNAF 3</div><div class="tile-desc">Now a horror amusement park. Block vents with cameras. Only one vent at a time.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/3/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 3</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/4/', 'FNAF 4')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🌑</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">FNAF 4</div><div class="tile-desc">High quality graphics. More complex, scarier animatronics. High-spec device recommended.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 4</span></div></div>
+        <div class="tile-body"><div class="tile-name">FNAF 4</div><div class="tile-desc">High quality graphics. More complex, scarier animatronics. High-spec device recommended.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/4/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF 4</span></div></div>
       </div>
       <div class="tile stripe-y" onclick="launchGame('https://irv77.github.io/hd_fnaf/w/', 'FNAF: World')">
         <div class="tile-art"><div class="tile-art-bg art-bg-y"></div><span class="tile-emoji">🌍</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">FNAF: World</div><div class="tile-desc">Choose your animatronics, set their AI (0–5) and how many. Up to 20 at once.</div><div class="tile-tags"><span class="ttag ttag-y">FNAF</span><span class="ttag ttag-p">RPG</span></div></div>
+        <div class="tile-body"><div class="tile-name">FNAF: World</div><div class="tile-desc">Choose your animatronics, set their AI (0–5) and how many. Up to 20 at once.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/w/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-y">FNAF</span><span class="ttag ttag-p">RPG</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/sl/', 'Sister Location')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🤖</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Sister Location</div><div class="tile-desc">A friendlier, more forgiving FNAF. Probably fine on most computers.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
+        <div class="tile-body"><div class="tile-name">Sister Location</div><div class="tile-desc">A friendlier, more forgiving FNAF. Probably fine on most computers.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/sl/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/ps/', 'Pizzeria Simulator')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🍕</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Pizzeria Simulator</div><div class="tile-desc">Still FNAF despite the name. High quality device recommended.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
+        <div class="tile-body"><div class="tile-name">Pizzeria Simulator</div><div class="tile-desc">Still FNAF despite the name. High quality device recommended.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/ps/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://irv77.github.io/hd_fnaf/ucn/', 'Ultimate Custom Night')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🌙</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Ultimate Custom Night</div><div class="tile-desc">Choose your animatronics, set their AI levels, and survive the night.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
+        <div class="tile-body"><div class="tile-name">Ultimate Custom Night</div><div class="tile-desc">Choose your animatronics, set their AI levels, and survive the night.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://irv77.github.io/hd_fnaf/ucn/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-y">FNAF</span></div></div>
       </div>
     </div>
   </div>
@@ -443,22 +449,22 @@
       <div class="tile stripe-r" onclick="launchGame('https://oma1.netlify.app', 'Granny')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">👵</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Granny</div><div class="tile-desc">You wake up in Granny's house. Be quiet or she'll hear you. Escape the house.</div>
-          <div class="mac-badge">🍎 MacBook version available</div>
-          <div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Stealth</span></div></div>
+          <div class="mac-badge">⛶ Fullscreen Mode available</div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://oma1.netlify.app','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Stealth</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('http://grandmother2.netlify.app', 'Granny 2')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">👴</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Granny 2</div><div class="tile-desc">Grandpa now lives with Granny. He has a shotgun. There's also a spider in the vents.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('http://grandmother2.netlify.app','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('http://grandmother2.netlify.app','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-c">Sequel</span></div></div>
       </div>
       <div class="tile stripe-r" onclick="launchGame('https://frontroom.netlify.app', 'Backrooms')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🟨</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Backrooms</div><div class="tile-desc">Escape a maze of yellow wallpaper. Something is watching you.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Explore</span></div></div>
+        <div class="tile-body"><div class="tile-name">Backrooms</div><div class="tile-desc">Escape a maze of yellow wallpaper. Something is watching you.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://frontroom.netlify.app','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Explore</span></div></div>
       </div>
-      <div class="tile stripe-r" onclick="launchGame('https://jeremywoodland.github.io/amongus/', 'Among Us')">
+      <div class="tile stripe-r" onclick="launchGame('https://james25191-a11y.github.io/t-games/amongus/', 'Among Us')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">🔪</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Among Us</div><div class="tile-desc">Complete tasks or find the impostor before it's too late.</div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Social</span></div></div>
+        <div class="tile-body"><div class="tile-name">Among Us</div><div class="tile-desc">Complete tasks or find the impostor before it's too late.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/amongus/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-r">Horror</span><span class="ttag ttag-d">Social</span></div></div>
       </div>
     </div>
   </div>
@@ -474,34 +480,34 @@
   <div class="section">
     <div class="sec-head"><div class="sec-label"><span class="dot dot-p"></span> All Games</div><div class="sec-rule"></div><div class="sec-count">7 GAMES</div></div>
     <div class="game-grid">
-      <div class="tile stripe-p" onclick="launchGame('https://incrediblewebsite.github.io/ovo/', 'OvO')">
+      <div class="tile stripe-p" onclick="launchGame('https://james25191-a11y.github.io/t-games/OvO/', 'OvO')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🥚</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">OvO</div><div class="tile-desc">Tricky controls to master but fun gameplay. A skill-based platformer.</div><div class="tile-tags"><span class="ttag ttag-p">Platformer</span></div></div>
+        <div class="tile-body"><div class="tile-name">OvO</div><div class="tile-desc">Tricky controls to master but fun gameplay. A skill-based platformer.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/OvO/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Platformer</span></div></div>
       </div>
-      <div class="tile stripe-p" onclick="launchGame('https://jeremywoodland.github.io/gam/', 'OvO 2')">
+      <div class="tile stripe-p" onclick="launchGame('https://james25191-a11y.github.io/t-games/ovo2/', 'OvO 2')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🥚</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">OvO 2</div><div class="tile-desc">More levels, more mechanics. The sequel to OvO.</div><div class="tile-tags"><span class="ttag ttag-p">Platformer</span><span class="ttag ttag-c">Sequel</span></div></div>
+        <div class="tile-body"><div class="tile-name">OvO 2</div><div class="tile-desc">More levels, more mechanics. The sequel to OvO.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/ovo2/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Platformer</span><span class="ttag ttag-c">Sequel</span></div></div>
       </div>
       <div class="tile stripe-g" onclick="launchGame('https://jeremywoodland.github.io/didish/', 'Dadish')">
         <div class="tile-art"><div class="tile-art-bg art-bg-g"></div><span class="tile-emoji">🥬</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Dadish</div><div class="tile-desc">A radish dad on a mission to find his kids. Charming platformer.</div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span></div></div>
+        <div class="tile-body"><div class="tile-name">Dadish</div><div class="tile-desc">A radish dad on a mission to find his kids. Charming platformer.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/didish/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span></div></div>
       </div>
       <div class="tile stripe-g" onclick="launchGame('https://jeremywoodland.github.io/ra/', 'Dadish 2')">
         <div class="tile-art"><div class="tile-art-bg art-bg-g"></div><span class="tile-emoji">🥬</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Dadish 2</div><div class="tile-desc">More levels, more kids to rescue. The adventure continues.</div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span><span class="ttag ttag-c">Sequel</span></div></div>
+        <div class="tile-body"><div class="tile-name">Dadish 2</div><div class="tile-desc">More levels, more kids to rescue. The adventure continues.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/ra/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span><span class="ttag ttag-c">Sequel</span></div></div>
       </div>
-      <div class="tile stripe-g" onclick="launchGame('https://jeremywoodland.github.io/test/', 'Dadish 3')">
+      <div class="tile stripe-g" onclick="launchGame('https://james25191-a11y.github.io/t-games/dadish3/', 'Dadish 3')">
         <div class="tile-art"><div class="tile-art-bg art-bg-g"></div><span class="tile-emoji">🥬</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Dadish 3</div><div class="tile-desc">The third adventure of everyone's favourite radish dad.</div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span><span class="ttag ttag-c">Sequel</span></div></div>
+        <div class="tile-body"><div class="tile-name">Dadish 3</div><div class="tile-desc">The third adventure of everyone's favourite radish dad.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/dadish3/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-g">Platformer</span><span class="ttag ttag-c">Sequel</span></div></div>
       </div>
       <div class="tile stripe-g" onclick="launchGame('https://incrediblewebsite.github.io/choppyorc/', 'Choppy Orc')">
         <div class="tile-art"><div class="tile-art-bg art-bg-g"></div><span class="tile-emoji">🪓</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Choppy Orc</div><div class="tile-desc">Chop your way through obstacles as a determined little orc.</div><div class="tile-tags"><span class="ttag ttag-g">Action</span></div></div>
+        <div class="tile-body"><div class="tile-name">Choppy Orc</div><div class="tile-desc">Chop your way through obstacles as a determined little orc.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/choppyorc/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-g">Action</span></div></div>
       </div>
-      <div class="tile stripe-r" onclick="launchGame('https://jeremywoodland.github.io/fggf/', 'Level Devil')">
+      <div class="tile stripe-r" onclick="launchGame('https://james25191-a11y.github.io/t-games/level%20devil/', 'Level Devil')">
         <div class="tile-art"><div class="tile-art-bg art-bg-r"></div><span class="tile-emoji">😈</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Level Devil</div><div class="tile-desc">The level changes as you play. Trust nothing.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/fggf/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/level%20devil/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-p">Platformer</span><span class="ttag ttag-r">Rage</span></div></div>
       </div>
     </div>
@@ -520,26 +526,26 @@
     <div class="game-grid">
       <div class="tile stripe-p" onclick="launchGame('https://james25191-a11y.github.io/stickmanacrchers/', 'Stickman Archers')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🏹</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Stickman Archers</div><div class="tile-desc">Aim, draw, and fire. A precision archery battle game.</div><div class="tile-tags"><span class="ttag ttag-p">Logic</span><span class="ttag ttag-g">Action</span></div></div>
+        <div class="tile-body"><div class="tile-name">Stickman Archers</div><div class="tile-desc">Aim, draw, and fire. A precision archery battle game.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/stickmanacrchers/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Logic</span><span class="ttag ttag-g">Action</span></div></div>
       </div>
-      <div class="tile stripe-p" onclick="launchGame('https://jeremywoodland.github.io/nogamehere/', 'There Is No Game')">
+      <div class="tile stripe-p" onclick="launchGame('https://james25191-a11y.github.io/t-games/theresnogame/', 'There Is No Game')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🚫</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">There Is No Game</div><div class="tile-desc">A game about there not being a game. Trust nothing you see.</div><div class="tile-tags"><span class="ttag ttag-p">Logic</span><span class="ttag ttag-d">Meta</span></div></div>
+        <div class="tile-body"><div class="tile-name">There Is No Game</div><div class="tile-desc">A game about there not being a game. Trust nothing you see.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://james25191-a11y.github.io/t-games/theresnogame/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Logic</span><span class="ttag ttag-d">Meta</span></div></div>
       </div>
       <div class="tile stripe-p" onclick="launchGame('https://incrediblewebsite.github.io/factoryballsforever/', 'Factory Balls')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">⚙️</span><div class="tile-play">Play</div></div>
-        <div class="tile-body"><div class="tile-name">Factory Balls</div><div class="tile-desc">Use machines to paint balls exactly as shown. A satisfying puzzle game.</div><div class="tile-tags"><span class="ttag ttag-p">Puzzle</span></div></div>
+        <div class="tile-body"><div class="tile-name">Factory Balls</div><div class="tile-desc">Use machines to paint balls exactly as shown. A satisfying puzzle game.</div><div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/factoryballsforever/','_blank')">⛶ Fullscreen Mode</button></div><div class="tile-tags"><span class="ttag ttag-p">Puzzle</span></div></div>
       </div>
       <div class="tile stripe-p" onclick="launchGame('https://minesw.netlify.app', 'Minesweeper')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">💣</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Minesweeper</div><div class="tile-desc">Classic minesweeper. Flag the mines, clear the board.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://minesw.netlify.app','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://minesw.netlify.app','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-p">Logic</span><span class="ttag ttag-p">Puzzle</span></div></div>
       </div>
       <div class="tile stripe-p" onclick="launchGame('https://jeremywoodland.github.io/spacewaves/', 'Space Waves')">
         <div class="tile-art"><div class="tile-art-bg art-bg-p"></div><span class="tile-emoji">🚀</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Space Waves</div><div class="tile-desc">Dodge and weave through waves of enemies in space.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/spacewaves/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jeremywoodland.github.io/spacewaves/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-p">Logic</span><span class="ttag ttag-g">Action</span></div></div>
       </div>
     </div>
@@ -561,42 +567,42 @@
       <div class="tile stripe-c" onclick="launchGame('https://geometrydish.netlify.app', 'Geometry Dash')">
         <div class="tile-art"><div class="tile-art-bg art-bg-c"></div><span class="tile-emoji">🎮</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Geometry Dash</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://geometrydish.netlify.app','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://geometrydish.netlify.app','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-c">Requested</span></div></div>
       </div>
 
       <div class="tile stripe-c" onclick="launchGame('https://minethencraft.netlify.app', 'Minecraft')">
         <div class="tile-art"><div class="tile-art-bg art-bg-c"></div><span class="tile-emoji">⛏️</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Minecraft</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://minethencraft.netlify.app','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://minethencraft.netlify.app','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-c">Requested</span></div></div>
       </div>
 
       <div class="tile stripe-c" onclick="launchGame('https://jasongamesdev.github.io/friday-night-funkin/', 'Friday Night Funkin')">
         <div class="tile-art"><div class="tile-art-bg art-bg-c"></div><span class="tile-emoji">🎵</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Friday Night Funkin'</div><div class="tile-desc">Tap arrow keys to the beat. Very hard.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jasongamesdev.github.io/friday-night-funkin/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://jasongamesdev.github.io/friday-night-funkin/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-c">Requested</span><span class="ttag ttag-p">Rhythm</span></div></div>
       </div>
 
       <div class="tile stripe-c" onclick="launchGame('https://incrediblewebsite.github.io/idlebreakout/', 'Idle Breakout')">
         <div class="tile-art"><div class="tile-art-bg art-bg-c"></div><span class="tile-emoji">🧱</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Idle Breakout</div><div class="tile-desc">Click to break bricks, earn money, buy upgrades, progress through levels.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/idlebreakout/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/idlebreakout/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-c">Requested</span><span class="ttag ttag-y">Idle</span></div></div>
       </div>
 
       <div class="tile stripe-c" onclick="launchGame('https://incrediblewebsite.github.io/sm64/', 'Super Mario 64')">
         <div class="tile-art"><div class="tile-art-bg art-bg-c"></div><span class="tile-emoji">🍄</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Super Mario 64</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/sm64/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/sm64/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-c">Requested</span><span class="ttag ttag-p">Classic</span></div></div>
       </div>
 
       <div class="tile stripe-c" onclick="launchGame('https://incrediblewebsite.github.io/factoryballsforever/', 'Factory Balls Forever')">
         <div class="tile-art"><div class="tile-art-bg art-bg-c"></div><span class="tile-emoji">⚙️</span><div class="tile-play">Play</div></div>
         <div class="tile-body"><div class="tile-name">Factory Balls Forever</div><div class="tile-desc">Use machines to paint balls exactly as shown. A satisfying puzzle game.</div>
-          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/factoryballsforever/','_blank')">🍎 MacBook version</button></div>
+          <div style="margin-top:4px"><button class="mac-btn" onclick="event.stopPropagation();window.open('https://incrediblewebsite.github.io/factoryballsforever/','_blank')">⛶ Fullscreen Mode</button></div>
           <div class="tile-tags"><span class="ttag ttag-c">Requested</span><span class="ttag ttag-p">Puzzle</span></div></div>
       </div>
 
@@ -992,6 +998,7 @@
   let currentPings = {}; // pushId -> { channel, fromName, snippet, ts }
   let pingListenerUnsub = null;
   let lastPingName = null;
+  let knownNames = new Set(); // real names seen in chat, used to validate @mentions
 
   function sanitizeKey(str) {
     return String(str).replace(/[.#$\[\]\/]/g, '_');
@@ -1139,13 +1146,30 @@
       });
     }
 
-    // ping anyone @mentioned in the message (unless they mentioned themselves)
+    // ping anyone @mentioned in the message — only if it's a real known name, or @everyone
     const mentioned = new Set();
     let match;
     MENTION_REGEX.lastIndex = 0;
     while ((match = MENTION_REGEX.exec(text)) !== null) {
       const mentionedName = match[1];
-      if (mentionedName && mentionedName !== chatName && !mentioned.has(mentionedName)) {
+      if (!mentionedName) continue;
+
+      if (mentionedName.toLowerCase() === 'everyone') {
+        knownNames.forEach(n => {
+          if (n && n !== chatName && !mentioned.has(n)) {
+            mentioned.add(n);
+            push(ref(db, 'pings/' + sanitizeKey(n)), {
+              channel: currentChannel,
+              fromName: chatName,
+              snippet: text.slice(0, 80),
+              ts: Date.now()
+            });
+          }
+        });
+        continue;
+      }
+
+      if (mentionedName !== chatName && knownNames.has(mentionedName) && !mentioned.has(mentionedName)) {
         mentioned.add(mentionedName);
         push(ref(db, 'pings/' + sanitizeKey(mentionedName)), {
           channel: currentChannel,
@@ -1174,6 +1198,7 @@
   function renderMessageRow(key, msg) {
     const row = document.createElement('div');
     row.dataset.key = key;
+    row.className = 'msg-row';
     row.style.cssText = "font-size:0.85rem;line-height:1.4;display:flex;align-items:flex-start;gap:8px;";
     const isMe = msg.name === chatName;
     const timeStr = formatTimestamp(msg.ts);
@@ -1193,7 +1218,7 @@
           ↩️ ${escapeHtml(msg.replyTo.name)}: "${escapeHtml(msg.replyTo.text)}"
         </div>`
       : '';
-    row.innerHTML = `${avatarHtml}<span class="msg-text">${quoteHtml}<span style="font-weight:700;color:${isMe ? 'var(--p)' : 'var(--c)'}">${escapeHtml(msg.name)}:</span> <span class="msg-body" style="color:var(--text)">${highlightMentions(escapeHtml(msg.text))}</span> <span style="color:var(--muted);font-size:0.72rem;margin-left:4px;">${timeStr}</span>${editedTag} <span style="margin-left:4px;">${replyBtnHtml}${editDeleteHtml}</span></span>`;
+    row.innerHTML = `${avatarHtml}<span class="msg-text">${quoteHtml}<span style="font-weight:700;color:${isMe ? 'var(--p)' : 'var(--c)'}">${escapeHtml(msg.name)}:</span> <span class="msg-body" style="color:var(--text)">${highlightMentions(escapeHtml(msg.text))}</span> <span style="color:var(--muted);font-size:0.72rem;margin-left:4px;">${timeStr}</span>${editedTag} <span class="msg-controls" style="margin-left:4px;">${replyBtnHtml}${editDeleteHtml}</span></span>`;
     return row;
   }
 
@@ -1224,7 +1249,9 @@
     const box = document.getElementById('chat-messages');
 
     const unsubAdd = onChildAdded(recentQuery, (snap) => {
-      const row = renderMessageRow(snap.key, snap.val());
+      const msg = snap.val();
+      if (msg && msg.name) knownNames.add(msg.name);
+      const row = renderMessageRow(snap.key, msg);
       box.appendChild(row);
       box.scrollTop = box.scrollHeight;
     });
@@ -1469,19 +1496,19 @@
     { name: 'Granny', url: 'https://oma1.netlify.app' },
     { name: 'Granny 2', url: 'http://grandmother2.netlify.app' },
     { name: 'Backrooms', url: 'https://frontroom.netlify.app' },
-    { name: 'Among Us', url: 'https://jeremywoodland.github.io/amongus/' },
-    { name: 'OvO', url: 'https://incrediblewebsite.github.io/ovo/' },
-    { name: 'OvO 2', url: 'https://jeremywoodland.github.io/gam/' },
+    { name: 'Among Us', url: 'https://james25191-a11y.github.io/t-games/amongus/' },
+    { name: 'OvO', url: 'https://james25191-a11y.github.io/t-games/OvO/' },
+    { name: 'OvO 2', url: 'https://james25191-a11y.github.io/t-games/ovo2/' },
     { name: 'Dadish', url: 'https://jeremywoodland.github.io/didish/' },
     { name: 'Dadish 2', url: 'https://jeremywoodland.github.io/ra/' },
-    { name: 'Dadish 3', url: 'https://jeremywoodland.github.io/test/' },
+    { name: 'Dadish 3', url: 'https://james25191-a11y.github.io/t-games/dadish3/' },
     { name: 'Choppy Orc', url: 'https://incrediblewebsite.github.io/choppyorc/' },
     { name: 'Stickman Archers', url: 'https://james25191-a11y.github.io/stickmanacrchers/' },
-    { name: 'Level Devil', url: 'https://jeremywoodland.github.io/fggf/' },
+    { name: 'Level Devil', url: 'https://james25191-a11y.github.io/t-games/level%20devil/' },
     { name: 'Factory Balls', url: 'https://incrediblewebsite.github.io/factoryballsforever/' },
     { name: 'Minesweeper', url: 'https://minesw.netlify.app' },
     { name: 'Space Waves', url: 'https://jeremywoodland.github.io/spacewaves/' },
-    { name: 'There Is No Game', url: 'https://jeremywoodland.github.io/nogamehere/' },
+    { name: 'There Is No Game', url: 'https://james25191-a11y.github.io/t-games/theresnogame/' },
     { name: 'Geometry Dash', url: 'https://geometrydish.netlify.app' },
     { name: 'Super Mario 64', url: 'https://incrediblewebsite.github.io/sm64/' },
     { name: 'Minecraft', url: 'https://minethencraft.netlify.app' },
