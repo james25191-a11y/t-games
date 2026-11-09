@@ -222,9 +222,55 @@
       font-family:'Space Grotesk',sans-serif; transition:color 0.15s; padding:0; }
     footer button:hover { color:var(--text); }
 
+    /* ── MEDIA page ── */
+    .media-sb { width:172px; flex-shrink:0; position:sticky; top:70px; background:var(--paper); border:1px solid var(--rim); border-radius:var(--rad); padding:6px; }
+    .media-sb.collapsed { width:46px; }
+    .media-sb button { display:flex; align-items:center; gap:8px; width:100%; background:none; border:none; color:var(--text); font-family:'Space Grotesk',sans-serif;
+      font-size:0.8rem; font-weight:600; padding:8px; border-radius:7px; cursor:pointer; text-align:left; white-space:nowrap; overflow:hidden; }
+    .media-sb button:hover { background:var(--lift); }
+    .media-sb button.active { background:var(--lift); color:var(--p); }
+    .media-sb .mi { width:20px; text-align:center; flex-shrink:0; }
+    .media-sb .ml { overflow:hidden; text-overflow:ellipsis; }
+    .media-sb.collapsed .ml { display:none; }
+    .media-sb .sb-sep { height:1px; background:var(--rim); margin:5px 2px; }
+    .media-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:14px; }
+    .media-card { cursor:pointer; min-width:0; }
+    .media-thumb { position:relative; aspect-ratio:16/9; background:#000; border-radius:8px; overflow:hidden; }
+    .media-thumb video { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+    .media-dur { position:absolute; right:6px; bottom:6px; background:rgba(0,0,0,0.75); color:#fff; font-size:0.68rem; font-weight:600; padding:1px 5px; border-radius:4px; }
+    .media-card h4 { font-size:0.85rem; font-weight:600; margin:6px 0 2px; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .media-meta { font-size:0.72rem; color:var(--muted); }
+    .media-empty { color:var(--muted); font-size:0.85rem; line-height:1.5; padding:1.5rem 0; }
+    .media-back, .media-del { background:none; border:1px solid var(--rim); color:var(--text); border-radius:7px; padding:6px 11px; cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:0.78rem; font-weight:600; }
+    .media-back { margin-bottom:10px; }
+    .media-del { color:var(--r); border-color:var(--r); margin-top:12px; }
+    .media-desc { font-size:0.85rem; line-height:1.5; margin-top:10px; white-space:pre-wrap; word-break:break-word; background:var(--lift); border-radius:8px; padding:10px 12px; }
+    .shorts-feed { height:calc(100vh - 150px); min-height:420px; overflow-y:auto; scroll-snap-type:y mandatory; background:var(--lift); border-radius:12px; }
+    .short-item { height:100%; scroll-snap-align:start; scroll-snap-stop:always; display:flex; align-items:center; justify-content:center; padding:8px 0; box-sizing:border-box; }
+    .short-box { position:relative; height:100%; aspect-ratio:9/16; max-width:100%; background:#000; border-radius:12px; overflow:hidden; }
+    .short-box video { width:100%; height:100%; object-fit:contain; display:block; cursor:pointer; }
+    .short-btns { position:absolute; top:8px; right:8px; display:flex; gap:6px; }
+    .short-btns button { background:rgba(0,0,0,0.55); color:#fff; border:none; border-radius:999px; padding:6px 9px; cursor:pointer; font-size:0.8rem; }
+    .short-info { position:absolute; left:0; right:0; bottom:0; padding:38px 12px 12px; background:linear-gradient(transparent,rgba(0,0,0,0.78)); color:#fff; pointer-events:none; }
+    .short-info .t { font-weight:700; font-size:0.9rem; }
+    .short-info .m { font-size:0.72rem; opacity:0.8; margin-top:2px; }
+    .short-info .d { font-size:0.78rem; margin-top:5px; white-space:pre-wrap; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .mm-overlay { position:fixed; inset:0; z-index:1800; background:rgba(20,10,35,0.6); display:none; align-items:center; justify-content:center; padding:1rem; }
+    .mm-box { background:var(--paper); border:1px solid var(--rim); border-radius:14px; padding:1.25rem; width:100%; max-width:420px; font-family:'Space Grotesk',sans-serif; color:var(--text); }
+    .mm-box h3 { font-size:1.05rem; margin-bottom:6px; }
+    .mm-box p { font-size:0.8rem; color:var(--muted); line-height:1.45; margin-bottom:10px; }
+    .mm-box input[type=text], .mm-box textarea { width:100%; box-sizing:border-box; background:var(--lift); border:1px solid var(--rim); border-radius:8px; padding:9px 12px;
+      color:var(--text); font-family:inherit; font-size:0.85rem; outline:none; margin-bottom:8px; }
+    .mm-box textarea { min-height:90px; resize:vertical; }
+    .mm-err { color:var(--r) !important; min-height:1em; }
+    .mm-row { display:flex; gap:8px; margin-top:4px; }
+    .mm-primary { flex:1; background:var(--p); color:#fff; border:none; border-radius:8px; padding:10px; cursor:pointer; font-family:inherit; font-size:0.85rem; font-weight:600; }
+    .mm-secondary { background:none; color:var(--muted); border:1px solid var(--rim); border-radius:8px; padding:10px 14px; cursor:pointer; font-family:inherit; font-size:0.85rem; }
+    .mm-bar { height:8px; background:var(--lift); border-radius:99px; overflow:hidden; margin:10px 0 6px; }
+    .mm-bar > div { height:100%; width:0; background:var(--p); transition:width .2s; }
     @media(max-width:600px){
       .hero-h1{font-size:3.2rem;} .game-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}
-      nav{padding:0 1rem; gap:1rem;} .section{padding:2.5rem 1rem;}
+      nav{padding:0 1rem; gap:1rem;} .section{padding:2.5rem 1rem;} .media-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}
     }
   </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
@@ -263,16 +309,17 @@
   <span class="logo-mark" onclick="showPage('home')">T<span class="dash">—</span> games</span>
   <div class="nav-scroll">
     <button class="nav-btn active" id="nav-home" onclick="showPage('home')">Home</button>
-    <button class="nav-btn" id="nav-toppicks" onclick="showPage('toppicks')">Top Picks</button>
+    <button class="nav-btn" id="nav-toppicks" onclick="showPage('toppicks')">⭐ Top Picks</button>
     <button class="nav-btn" id="nav-horror" onclick="showPage('horror')">Horror</button>
     <button class="nav-btn" id="nav-platform" onclick="showPage('platform')">Platformer</button>
     <button class="nav-btn" id="nav-logic" onclick="showPage('logic')">Logic</button>
     <button class="nav-btn" id="nav-action" onclick="showPage('action')">Action</button>
     <button class="nav-btn" id="nav-requested" onclick="showPage('requested')">Requested</button>
-    <button class="nav-btn" id="nav-competition" onclick="showPage('competition')">Competitions</button>
+    <button class="nav-btn" id="nav-competition" onclick="showPage('competition')">Competition</button>
     <button class="nav-btn" id="nav-social" onclick="showPage('social')">Social</button>
+    <button class="nav-btn" id="nav-media" onclick="showPage('media')">Media</button>
     <button class="nav-btn" id="nav-chat" onclick="showPage('chat')">Chat<span id="nav-chat-badge" class="ping-badge" style="display:none;">0</span></button>
-    <button class="nav-btn" id="nav-people" onclick="showPage('people')" style="display:none;" title="Admin only">Admin</button>
+    <button class="nav-btn" id="nav-people" onclick="showPage('people')" style="display:none;" title="Admin only">👥 People</button>
     <button class="nav-btn" id="nav-settings" onclick="showPage('settings')" title="Settings">⚙️</button>
   </div>
   <div style="position:relative;flex-shrink:0;">
@@ -1496,6 +1543,29 @@
 </div>
 
 
+<!-- ═══════════════════════════════════ MEDIA ═══════════════════════════════════ -->
+<div class="page" id="page-media">
+  <div id="media-app" style="max-width:1300px;margin:0 auto;padding:12px 16px 28px;">
+    <input id="media-search" type="text" placeholder="Search videos…" autocomplete="off" oninput="mediaOnSearch(this.value)"
+      style="display:block;width:100%;max-width:520px;background:var(--lift);border:1px solid var(--rim);border-radius:8px;padding:9px 14px;
+      color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:0.85rem;outline:none;margin-bottom:12px;">
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <div id="media-main" style="flex:1;min-width:0;"></div>
+      <aside id="media-sidebar" class="media-sb">
+        <button id="media-sb-toggle" onclick="mediaToggleSidebar()" title="Collapse / expand"><span class="mi" id="media-sb-toggle-icon">»</span><span class="ml">Collapse</span></button>
+        <div class="sb-sep"></div>
+        <button id="media-sb-home" onclick="mediaGoHome()"><span class="mi">🏠</span><span class="ml">Home</span></button>
+        <button id="media-sb-shorts" onclick="mediaGoShorts()"><span class="mi">📱</span><span class="ml">Shorts</span></button>
+        <div class="sb-sep"></div>
+        <button onclick="mediaOpenUpload('videos')"><span class="mi">🎬</span><span class="ml">+ Add video</span></button>
+        <button onclick="mediaOpenUpload('shorts')"><span class="mi">📲</span><span class="ml">+ Add short</span></button>
+      </aside>
+    </div>
+  </div>
+  <div id="media-modal" class="mm-overlay"></div>
+</div>
+
+
 <!-- ═══════════════════════════════════ PEOPLE (ADMIN ONLY) ═══════════════════════════════════ -->
 <div class="page" id="page-people">
   <div class="page-header">
@@ -1787,6 +1857,417 @@
     set(onlineRef, Date.now()).catch((e) => console.warn('[online] write failed (check Firebase rules for "online"):', e));
     onDisconnect(onlineRef).remove();
   }
+
+  // ── MEDIA (videos + shorts) ──
+  // Video files are far too big for the Realtime Database, so the files are
+  // uploaded to Cloudinary and only the title/description/link metadata lives
+  // in Firebase under media/videos and media/shorts.
+  //
+  // SETUP (both values are safe to keep in the page — they are not secrets):
+  //   1. Cloudinary dashboard → copy your "Cloud name".
+  //   2. Settings → Upload → Upload presets → Add upload preset →
+  //      Signing mode: Unsigned → save, then copy the preset's name.
+  const CLOUDINARY_CLOUD_NAME = 'dgtrzkgv';
+  const CLOUDINARY_UPLOAD_PRESET = 't-video';
+  const MEDIA_MAX_BYTES = 100 * 1024 * 1024; // Cloudinary's free plan caps videos at 100 MB
+  const SHORT_RATIO = 9 / 16, SHORT_RATIO_TOLERANCE = 0.03;
+  let mediaView = 'home';          // 'home' | 'shorts' | 'watch'
+  let mediaWatchId = null;
+  let mediaQuery = '';
+  let mediaVideos = {}, mediaShorts = {};
+  let mediaWatchersAttached = false;
+  let mediaLoadError = '';
+  let mediaMuted = false;
+  let mediaShortsObserver = null;
+  let mediaUp = null;              // upload modal state
+
+  function mediaIsOwner(rec) {
+    const u = auth && auth.currentUser;
+    return isAdmin() || !!(u && rec.uid && rec.uid === u.uid);
+  }
+  function mediaTimeAgo(ts) {
+    if (!ts) return '';
+    const s = Math.max(0, (Date.now() - ts) / 1000);
+    if (s < 60) return 'just now';
+    const units = [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600], ['minute', 60]];
+    for (const [name, secs] of units) {
+      if (s >= secs) { const n = Math.floor(s / secs); return n + ' ' + name + (n === 1 ? '' : 's') + ' ago'; }
+    }
+    return '';
+  }
+  function mediaFmtDuration(sec) {
+    sec = Math.round(sec || 0);
+    const m = Math.floor(sec / 60), s = sec % 60;
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+  function mediaFmtSize(b) { return b >= 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; }
+  function mediaSorted(map) {
+    return Object.entries(map || {}).map(([id, r]) => Object.assign({ id }, r)).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+  }
+  function mediaFiltered(list) {
+    const q = mediaQuery.trim().toLowerCase();
+    if (!q) return list;
+    return list.filter((r) => ((r.title || '') + ' ' + (r.desc || '') + ' ' + (r.name || '')).toLowerCase().includes(q));
+  }
+
+  // ── rendering ──
+  function mediaRender() {
+    const main = document.getElementById('media-main');
+    if (!main) return;
+    const homeBtn = document.getElementById('media-sb-home');
+    const shortsBtn = document.getElementById('media-sb-shorts');
+    if (homeBtn) homeBtn.classList.toggle('active', mediaView !== 'shorts');
+    if (shortsBtn) shortsBtn.classList.toggle('active', mediaView === 'shorts');
+    const search = document.getElementById('media-search');
+    if (search) search.placeholder = mediaView === 'shorts' ? 'Search shorts…' : 'Search videos…';
+    if (mediaShortsObserver) { mediaShortsObserver.disconnect(); mediaShortsObserver = null; }
+    if (mediaView === 'watch') mediaRenderWatch(main);
+    else if (mediaView === 'shorts') mediaRenderShorts(main);
+    else mediaRenderHome(main);
+  }
+
+  function mediaMessage(main, text) {
+    main.innerHTML = '<p class="media-empty">' + escapeHtml(text) + '</p>';
+  }
+
+  function mediaRenderHome(main) {
+    if (!db) { mediaMessage(main, 'Not connected right now — try again in a moment.'); return; }
+    if (mediaLoadError) { mediaMessage(main, mediaLoadError); return; }
+    const all = mediaSorted(mediaVideos);
+    const list = mediaFiltered(all);
+    if (!list.length) {
+      mediaMessage(main, all.length ? 'No videos match your search.' : 'No videos yet — use “+ Add video” in the sidebar to publish the first one.');
+      return;
+    }
+    main.innerHTML = '<div class="media-grid">' + list.map((r) =>
+      '<div class="media-card" data-act="open" data-id="' + escapeAttr(r.id) + '">' +
+        '<div class="media-thumb"><video src="' + escapeAttr(r.url || '') + '#t=0.1" preload="metadata" muted playsinline></video>' +
+        (r.dur ? '<span class="media-dur">' + mediaFmtDuration(r.dur) + '</span>' : '') + '</div>' +
+        '<h4>' + escapeHtml(r.title || 'Untitled') + '</h4>' +
+        '<div class="media-meta">' + escapeHtml(r.name || 'Unknown') + ' · ' + mediaTimeAgo(r.ts) + '</div>' +
+      '</div>').join('') + '</div>';
+  }
+
+  function mediaRenderWatch(main) {
+    const r = mediaVideos[mediaWatchId];
+    if (!r) { mediaView = 'home'; mediaWatchId = null; mediaRenderHome(main); return; }
+    main.innerHTML = '<div style="max-width:900px;">' +
+      '<button class="media-back" data-act="back">← Back</button>' +
+      '<video src="' + escapeAttr(r.url || '') + '" controls autoplay playsinline style="display:block;width:100%;max-height:72vh;background:#000;border-radius:10px;"></video>' +
+      '<h3 style="font-size:1.05rem;margin:10px 0 2px;">' + escapeHtml(r.title || 'Untitled') + '</h3>' +
+      '<div class="media-meta">' + escapeHtml(r.name || 'Unknown') + ' · ' + mediaTimeAgo(r.ts) + '</div>' +
+      (r.desc ? '<div class="media-desc">' + escapeHtml(r.desc) + '</div>' : '') +
+      (mediaIsOwner(r) ? '<button class="media-del" data-act="delete-video" data-id="' + escapeAttr(mediaWatchId) + '">Delete video</button>' : '') +
+    '</div>';
+  }
+
+  function mediaRenderShorts(main) {
+    if (!db) { mediaMessage(main, 'Not connected right now — try again in a moment.'); return; }
+    if (mediaLoadError) { mediaMessage(main, mediaLoadError); return; }
+    const all = mediaSorted(mediaShorts);
+    const list = mediaFiltered(all);
+    if (!list.length) {
+      mediaMessage(main, all.length ? 'No shorts match your search.' : 'No shorts yet — use “+ Add short” in the sidebar to publish the first one.');
+      return;
+    }
+    main.innerHTML = '<div class="shorts-feed" id="shorts-feed">' + list.map((r) =>
+      '<div class="short-item" data-short-id="' + escapeAttr(r.id) + '"><div class="short-box">' +
+        '<video src="' + escapeAttr(r.url || '') + '" loop playsinline preload="metadata"' + (mediaMuted ? ' muted' : '') + ' data-act="toggle-play"></video>' +
+        '<div class="short-btns"><button data-act="mute" class="short-mute">' + (mediaMuted ? '🔇' : '🔊') + '</button>' +
+          (mediaIsOwner(r) ? '<button data-act="delete-short" data-id="' + escapeAttr(r.id) + '" title="Delete">🗑</button>' : '') + '</div>' +
+        '<div class="short-info"><div class="t">' + escapeHtml(r.title || 'Untitled') + '</div>' +
+          '<div class="m">' + escapeHtml(r.name || 'Unknown') + ' · ' + mediaTimeAgo(r.ts) + '</div>' +
+          (r.desc ? '<div class="d">' + escapeHtml(r.desc) + '</div>' : '') + '</div>' +
+      '</div></div>').join('') + '</div>';
+
+    // Play whichever short is mostly on screen; pause the rest.
+    const feed = document.getElementById('shorts-feed');
+    mediaShortsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        const v = en.target.querySelector('video');
+        if (!v) return;
+        if (en.isIntersecting) {
+          const p = v.play();
+          if (p && p.catch) p.catch(() => { mediaMuted = true; v.muted = true; mediaSyncMuteButtons(); v.play().catch(() => {}); });
+        } else {
+          v.pause();
+        }
+      });
+    }, { root: feed, threshold: 0.7 });
+    feed.querySelectorAll('.short-item').forEach((el) => mediaShortsObserver.observe(el));
+  }
+
+  function mediaSyncMuteButtons() {
+    document.querySelectorAll('#media-main .short-mute').forEach((b) => { b.textContent = mediaMuted ? '🔇' : '🔊'; });
+  }
+  function mediaToggleMute() {
+    mediaMuted = !mediaMuted;
+    document.querySelectorAll('#media-main .short-item video').forEach((v) => { v.muted = mediaMuted; });
+    mediaSyncMuteButtons();
+  }
+
+  // Called whenever the video/short lists change in Firebase. Re-rendering the
+  // home grid is cheap; the watch and shorts views are left alone so a new
+  // upload from someone else doesn't restart what you're watching.
+  function mediaOnData() {
+    const main = document.getElementById('media-main');
+    if (!main) return;
+    if (mediaView === 'home') { mediaRender(); return; }
+    if (mediaView === 'watch') { if (!mediaVideos[mediaWatchId]) mediaRender(); return; }
+    const feed = document.getElementById('shorts-feed');
+    if (!feed) { mediaRender(); return; }
+    feed.querySelectorAll('.short-item').forEach((el) => { if (!mediaShorts[el.dataset.shortId]) el.remove(); });
+    if (!feed.querySelector('.short-item')) mediaRender();
+  }
+
+  // ── navigation ──
+  function mediaOpenVideo(id) { mediaView = 'watch'; mediaWatchId = id; mediaRender(); }
+  window.mediaGoHome = function () { mediaView = 'home'; mediaWatchId = null; mediaRender(); };
+  window.mediaGoShorts = function () { mediaView = 'shorts'; mediaWatchId = null; mediaRender(); };
+  window.mediaOnSearch = function (v) {
+    mediaQuery = v || '';
+    if (mediaView === 'watch') { mediaView = 'home'; mediaWatchId = null; }
+    mediaRender();
+  };
+  window.mediaPauseAll = function () {
+    document.querySelectorAll('#page-media video').forEach((v) => v.pause());
+  };
+
+  function mediaApplySidebarState() {
+    const sb = document.getElementById('media-sidebar');
+    if (!sb) return;
+    let collapsed;
+    try { collapsed = localStorage.getItem('tgames_media_sb'); } catch (e) { collapsed = null; }
+    collapsed = collapsed === null ? window.innerWidth < 700 : collapsed === '1';
+    sb.classList.toggle('collapsed', collapsed);
+    const icon = document.getElementById('media-sb-toggle-icon');
+    if (icon) icon.textContent = collapsed ? '«' : '»';
+  }
+  window.mediaToggleSidebar = function () {
+    const sb = document.getElementById('media-sidebar');
+    if (!sb) return;
+    const collapsed = !sb.classList.contains('collapsed');
+    sb.classList.toggle('collapsed', collapsed);
+    const icon = document.getElementById('media-sb-toggle-icon');
+    if (icon) icon.textContent = collapsed ? '«' : '»';
+    try { localStorage.setItem('tgames_media_sb', collapsed ? '1' : '0'); } catch (e) {}
+  };
+
+  function loadMediaPage() {
+    mediaApplySidebarState();
+    if (db && !mediaWatchersAttached) {
+      mediaWatchersAttached = true;
+      const onErr = (e) => {
+        console.warn('[media] read failed (check Firebase rules for "media"):', e);
+        mediaLoadError = 'Couldn’t load media — check that the Firebase rules include “media”.';
+        mediaRender();
+      };
+      onValue(query(ref(db, 'media/videos'), limitToLast(200)), (snap) => { mediaVideos = snap.val() || {}; mediaLoadError = ''; mediaOnData(); }, onErr);
+      onValue(query(ref(db, 'media/shorts'), limitToLast(200)), (snap) => { mediaShorts = snap.val() || {}; mediaLoadError = ''; mediaOnData(); }, onErr);
+    }
+    mediaRender();
+  }
+  window.loadMediaPage = loadMediaPage;
+
+  // ── delete ──
+  async function mediaDelete(type, id) {
+    const rec = (type === 'shorts' ? mediaShorts : mediaVideos)[id];
+    if (!rec) return;
+    if (!confirm('Delete “' + (rec.title || 'this') + '”? This can’t be undone.')) return;
+    try {
+      await remove(ref(db, 'media/' + type + '/' + id));
+    } catch (e) {
+      console.warn('[media] delete failed:', e);
+      alert('Couldn’t delete that — you may not have permission.');
+      return;
+    }
+    // The video file itself stays in Cloudinary (unsigned uploads can't be deleted
+    // from a browser); it disappears from the site and can be cleared from the dashboard.
+  }
+
+  // ── upload modal ──
+  function mediaReadVideoMeta(file) {
+    return new Promise((resolve, reject) => {
+      const url = URL.createObjectURL(file);
+      const v = document.createElement('video');
+      let done = false;
+      const finish = (fn, val) => { if (done) return; done = true; clearTimeout(timer); URL.revokeObjectURL(url); fn(val); };
+      const timer = setTimeout(() => finish(reject, 'Couldn’t read that video. Try an MP4 or WebM file.'), 15000);
+      v.preload = 'metadata';
+      v.muted = true;
+      v.onloadedmetadata = () => finish(resolve, { w: v.videoWidth, h: v.videoHeight, dur: isFinite(v.duration) ? v.duration : 0 });
+      v.onerror = () => finish(reject, 'Couldn’t read that video — your browser may not support the format. Try an MP4 or WebM file.');
+      v.src = url;
+    });
+  }
+
+  function mediaCloseModal() {
+    if (mediaUp && mediaUp.xhr) { try { mediaUp.xhr.abort(); } catch (e) {} }
+    mediaUp = null;
+    const m = document.getElementById('media-modal');
+    if (m) { m.style.display = 'none'; m.innerHTML = ''; }
+  }
+  window.mediaCloseModal = mediaCloseModal;
+
+  function mediaRenderModal() {
+    const m = document.getElementById('media-modal');
+    if (!m || !mediaUp) return;
+    const up = mediaUp;
+    const isShort = up.type === 'shorts';
+    const label = isShort ? 'short' : 'video';
+    let body = '';
+    if (up.stage === 'choose') {
+      body = '<h3>Add ' + label + '</h3>' +
+        '<p>' + (isShort ? 'Choose a vertical 9:16 video (for example 1080×1920).' : 'Choose a video file to upload.') + ' Max ' + mediaFmtSize(MEDIA_MAX_BYTES) + '.</p>' +
+        '<p class="mm-err" id="mm-err">' + escapeHtml(up.err) + '</p>' +
+        '<input type="file" id="media-file-input" accept="video/*" hidden onchange="mediaFileChosen(this)">' +
+        '<div class="mm-row"><button class="mm-primary" onclick="document.getElementById(\'media-file-input\').click()">Choose video file</button>' +
+        '<button class="mm-secondary" onclick="mediaCloseModal()">Cancel</button></div>';
+    } else if (up.stage === 'details') {
+      body = '<h3>Add ' + label + '</h3>' +
+        '<p>' + escapeHtml(up.file.name) + ' · ' + mediaFmtSize(up.file.size) + ' · ' + up.meta.w + '×' + up.meta.h + '</p>' +
+        '<input type="text" id="media-title" maxlength="100" placeholder="Name" value="' + escapeAttr(up.title || '') + '">' +
+        '<textarea id="media-desc" maxlength="2000" placeholder="Description">' + escapeHtml(up.desc || '') + '</textarea>' +
+        '<p class="mm-err" id="mm-err">' + escapeHtml(up.err) + '</p>' +
+        '<div class="mm-row"><button class="mm-primary" onclick="mediaPublish()">Publish</button>' +
+        '<button class="mm-secondary" onclick="mediaBackToChoose()">Change file</button>' +
+        '<button class="mm-secondary" onclick="mediaCloseModal()">Cancel</button></div>';
+    } else {
+      body = '<h3>Uploading…</h3><p>' + escapeHtml(up.title) + '</p>' +
+        '<div class="mm-bar"><div id="mm-bar-fill"></div></div><p id="mm-pct">0%</p>' +
+        '<div class="mm-row"><button class="mm-secondary" onclick="mediaCloseModal()">Cancel upload</button></div>';
+    }
+    m.innerHTML = '<div class="mm-box">' + body + '</div>';
+    m.style.display = 'flex';
+  }
+
+  window.mediaOpenUpload = function (type) {
+    if (!chatName) { alert('Sign in first.'); return; }
+    if (!mediaCloudinaryReady()) { alert('Video uploads aren’t set up yet — the Cloudinary cloud name and upload preset still need to be added.'); return; }
+    mediaCloseModal();
+    mediaUp = { type, stage: 'choose', file: null, meta: null, err: '', xhr: null, title: '', desc: '' };
+    mediaRenderModal();
+  };
+  window.mediaBackToChoose = function () {
+    if (!mediaUp) return;
+    mediaUp.stage = 'choose'; mediaUp.file = null; mediaUp.meta = null; mediaUp.err = '';
+    mediaRenderModal();
+  };
+
+  window.mediaFileChosen = function (input) {
+    const up = mediaUp;
+    const file = input.files && input.files[0];
+    input.value = '';
+    if (!up || !file) return;
+    const fail = (msg) => { if (mediaUp !== up) return; up.err = msg; mediaRenderModal(); };
+    if (!(file.type || '').startsWith('video/')) { fail('That doesn’t look like a video file.'); return; }
+    if (file.size > MEDIA_MAX_BYTES) { fail('That file is ' + mediaFmtSize(file.size) + ' — the limit is ' + mediaFmtSize(MEDIA_MAX_BYTES) + '.'); return; }
+    const errEl = document.getElementById('mm-err');
+    if (errEl) errEl.textContent = 'Checking video…';
+    mediaReadVideoMeta(file).then((meta) => {
+      if (mediaUp !== up) return;
+      if (up.type === 'shorts' && (!meta.w || !meta.h || Math.abs(meta.w / meta.h - SHORT_RATIO) > SHORT_RATIO_TOLERANCE)) {
+        fail('That video is ' + meta.w + '×' + meta.h + '. Shorts must be vertical 9:16 (for example 1080×1920).');
+        return;
+      }
+      up.file = file; up.meta = meta; up.err = ''; up.stage = 'details';
+      mediaRenderModal();
+    }, fail);
+  };
+
+  function mediaCloudinaryReady() { return !!(CLOUDINARY_CLOUD_NAME && CLOUDINARY_UPLOAD_PRESET); }
+
+  // Direct browser → Cloudinary upload (unsigned preset), with progress.
+  function mediaCloudinaryUpload(file, onProgress, onXhr) {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + encodeURIComponent(CLOUDINARY_CLOUD_NAME) + '/video/upload');
+      xhr.upload.onprogress = (e) => { if (e.lengthComputable) onProgress(e.loaded / e.total); };
+      xhr.onload = () => {
+        let res = {};
+        try { res = JSON.parse(xhr.responseText); } catch (e) {}
+        if (xhr.status >= 200 && xhr.status < 300 && res.secure_url) resolve(res);
+        else reject(new Error((res.error && res.error.message) || ('HTTP ' + xhr.status)));
+      };
+      xhr.onerror = () => reject(new Error('network error'));
+      xhr.onabort = () => reject(Object.assign(new Error('canceled'), { canceled: true }));
+      const fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      onXhr(xhr);
+      xhr.send(fd);
+    });
+  }
+
+  window.mediaPublish = function () {
+    const up = mediaUp;
+    if (!up || up.stage !== 'details') return;
+    const titleEl = document.getElementById('media-title');
+    const descEl = document.getElementById('media-desc');
+    const errEl = document.getElementById('mm-err');
+    const title = (titleEl.value || '').trim();
+    const desc = (descEl.value || '').trim();
+    up.title = title; up.desc = desc;
+    const showErr = (msg) => { up.err = msg; if (errEl) errEl.textContent = msg; };
+    if (!title) { showErr('Give it a name first.'); titleEl.focus(); return; }
+    const user = auth && auth.currentUser;
+    if (!db || !mediaCloudinaryReady()) { showErr('Uploads aren’t available right now.'); return; }
+    if (!user) { showErr('You need to be signed in with Google — try Settings → Re-sign in with Google.'); return; }
+
+    up.stage = 'uploading'; up.err = '';
+    mediaRenderModal();
+    const type = up.type;
+    const id = push(ref(db, 'media/' + type)).key;
+    const backToDetails = (msg) => { if (mediaUp !== up) return; up.xhr = null; up.stage = 'details'; up.err = msg; mediaRenderModal(); };
+
+    mediaCloudinaryUpload(up.file, (frac) => {
+      if (mediaUp !== up) return;
+      const pct = Math.round(frac * 100);
+      const fill = document.getElementById('mm-bar-fill');
+      const label = document.getElementById('mm-pct');
+      if (fill) fill.style.width = pct + '%';
+      if (label) label.textContent = pct + '%';
+    }, (xhr) => { up.xhr = xhr; }).then(async (res) => {
+      if (mediaUp !== up) return;
+      try {
+        await set(ref(db, 'media/' + type + '/' + id), {
+          title, desc, url: res.secure_url, path: res.public_id || '', name: chatName, uid: user.uid, ts: Date.now(),
+          w: res.width || up.meta.w, h: res.height || up.meta.h, dur: Math.round(res.duration || up.meta.dur || 0), size: res.bytes || up.file.size
+        });
+        up.xhr = null;
+        mediaCloseModal();
+        mediaView = type === 'shorts' ? 'shorts' : 'home';
+        mediaWatchId = null;
+        mediaQuery = '';
+        const s = document.getElementById('media-search'); if (s) s.value = '';
+        mediaRender();
+      } catch (e) {
+        console.warn('[media] publish failed:', e);
+        backToDetails('The video uploaded but couldn’t be published — check the Firebase rules for “media”.');
+      }
+    }, (err) => {
+      if (err && err.canceled) return;
+      console.warn('[media] upload failed:', err);
+      backToDetails('Upload failed: ' + ((err && err.message) || 'unknown error'));
+    });
+  };
+
+  (function mediaInit() {
+    const main = document.getElementById('media-main');
+    if (!main) return;
+    main.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-act]');
+      if (!t || !main.contains(t)) return;
+      const act = t.dataset.act, id = t.dataset.id;
+      if (act === 'open') mediaOpenVideo(id);
+      else if (act === 'back') window.mediaGoHome();
+      else if (act === 'delete-video') mediaDelete('videos', id);
+      else if (act === 'delete-short') mediaDelete('shorts', id);
+      else if (act === 'mute') mediaToggleMute();
+      else if (act === 'toggle-play') { if (t.paused) t.play().catch(() => {}); else t.pause(); }
+    });
+  })();
+  // ── END MEDIA ──
 
   // ── SITE LOCKDOWN (admin only) ──
   // A single flag at 'siteStatus/enabled' — false means the whole site shows
@@ -6232,6 +6713,8 @@
     if (nb) nb.classList.add('active');
     if (id === 'chat' && typeof window.initChatIdentity === 'function') window.initChatIdentity();
     if (id === 'people' && typeof window.loadPeoplePage === 'function') window.loadPeoplePage();
+    if (id === 'media' && typeof window.loadMediaPage === 'function') window.loadMediaPage();
+    if (id !== 'media' && typeof window.mediaPauseAll === 'function') window.mediaPauseAll();
     if (id === 'review-form' && typeof initReviewStars === 'function') initReviewStars();
     if (id === 'social' && typeof renderBattleshipLists === 'function') renderBattleshipLists();
     if (id === 'social' && typeof renderSocialChessLists === 'function') renderSocialChessLists();
@@ -6253,6 +6736,7 @@
   // ── GAME PLAYER ──
   var _prevPage = 'home';
   function launchGame(url, title) {
+    if (typeof window.mediaPauseAll === 'function') window.mediaPauseAll();
     // find which page is currently active to return to it
     var active = document.querySelector('.page.active');
     if (active) _prevPage = active.id.replace('page-', '');
