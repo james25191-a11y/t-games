@@ -255,6 +255,29 @@
     .short-info .t { font-weight:700; font-size:0.9rem; }
     .short-info .m { font-size:0.72rem; opacity:0.8; margin-top:2px; }
     .short-info .d { font-size:0.78rem; margin-top:5px; white-space:pre-wrap; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+    .cmt-wrap { max-width:900px; margin-top:18px; }
+    .cmt-head { font-size:0.85rem; font-weight:700; margin-bottom:8px; }
+    .cmt-head .cmt-count { color:var(--muted); font-weight:600; }
+    .cmt-form { display:flex; gap:8px; align-items:flex-start; margin-bottom:6px; }
+    .cmt-input { flex:1; min-width:0; box-sizing:border-box; background:var(--lift); border:1px solid var(--rim); border-radius:8px; padding:8px 12px; min-height:38px;
+      color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:0.85rem; outline:none; resize:vertical; }
+    .cmt-post { background:var(--p); color:#fff; border:none; border-radius:8px; padding:9px 14px; cursor:pointer; font-family:'Space Grotesk',sans-serif; font-size:0.8rem; font-weight:600; }
+    .cmt-post:disabled { opacity:0.5; cursor:default; }
+    .cmt-err { color:var(--r); font-size:0.72rem; min-height:1em; margin-bottom:6px; }
+    .cmt { padding:9px 0; border-top:1px solid var(--rim); }
+    .cmt-meta { font-size:0.72rem; color:var(--muted); }
+    .cmt-meta b { color:var(--text); }
+    .cmt-text { font-size:0.85rem; line-height:1.45; white-space:pre-wrap; word-break:break-word; margin-top:2px; }
+    .cmt-del { background:none; border:none; color:var(--muted); cursor:pointer; font-size:0.72rem; margin-left:8px; font-family:inherit; }
+    .cmt-del:hover { color:var(--r); }
+    .cmt-empty { color:var(--muted); font-size:0.8rem; padding:8px 0; }
+    .cmt-panel { position:absolute; left:0; right:0; bottom:0; height:68%; background:var(--paper); color:var(--text); border-radius:14px 14px 0 0;
+      box-shadow:0 -6px 24px rgba(0,0,0,0.35); display:flex; flex-direction:column; padding:10px 12px; box-sizing:border-box; z-index:5; }
+    .cmt-panel .cmt-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+    .cmt-panel .cmt-head { margin-bottom:0; }
+    .cmt-panel .cmt-list { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; }
+    .cmt-panel .cmt-form { margin:6px 0 0; }
+    .cmt-close { background:none; border:none; color:var(--muted); cursor:pointer; font-size:1rem; padding:2px 6px; }
     .mm-overlay { position:fixed; inset:0; z-index:1800; background:rgba(20,10,35,0.6); display:none; align-items:center; justify-content:center; padding:1rem; }
     .mm-box { background:var(--paper); border:1px solid var(--rim); border-radius:14px; padding:1.25rem; width:100%; max-width:420px; font-family:'Space Grotesk',sans-serif; color:var(--text); }
     .mm-box h3 { font-size:1.05rem; margin-bottom:6px; }
@@ -1880,10 +1903,13 @@
   let mediaMuted = false;
   let mediaShortsObserver = null;
   let mediaUp = null;              // upload modal state
+  let mediaCommentsCtx = null;     // the comments view currently live: { type, id, root }
+  let mediaCommentsUnsub = null;
+  let mediaCommentsData = {};
 
   function mediaIsOwner(rec) {
     const u = auth && auth.currentUser;
-    return isAdmin() || !!(u && rec.uid && rec.uid === u.uid);
+    return !!(u && rec.uid && rec.uid === u.uid); // only the poster can delete
   }
   function mediaTimeAgo(ts) {
     if (!ts) return '';
@@ -1921,6 +1947,7 @@
     const search = document.getElementById('media-search');
     if (search) search.placeholder = mediaView === 'shorts' ? 'Search shorts…' : 'Search videos…';
     if (mediaShortsObserver) { mediaShortsObserver.disconnect(); mediaShortsObserver = null; }
+    mediaCloseComments(); // the DOM below is rebuilt, so any live comments view is gone
     if (mediaView === 'watch') mediaRenderWatch(main);
     else if (mediaView === 'shorts') mediaRenderShorts(main);
     else mediaRenderHome(main);
@@ -1958,7 +1985,9 @@
       '<div class="media-meta">' + escapeHtml(r.name || 'Unknown') + ' · ' + mediaTimeAgo(r.ts) + '</div>' +
       (r.desc ? '<div class="media-desc">' + escapeHtml(r.desc) + '</div>' : '') +
       (mediaIsOwner(r) ? '<button class="media-del" data-act="delete-video" data-id="' + escapeAttr(mediaWatchId) + '">Delete video</button>' : '') +
+      '<div class="cmt-wrap"><div class="cmt-head">Comments <span class="cmt-count"></span></div>' + mediaCommentFormMarkup() + '<div class="cmt-list"></div></div>' +
     '</div>';
+    mediaOpenComments('videos', mediaWatchId, main.querySelector('.cmt-wrap'));
   }
 
   function mediaRenderShorts(main) {
@@ -1974,6 +2003,7 @@
       '<div class="short-item" data-short-id="' + escapeAttr(r.id) + '"><div class="short-box">' +
         '<video src="' + escapeAttr(r.url || '') + '" loop playsinline preload="metadata"' + (mediaMuted ? ' muted' : '') + ' data-act="toggle-play"></video>' +
         '<div class="short-btns"><button data-act="mute" class="short-mute">' + (mediaMuted ? '🔇' : '🔊') + '</button>' +
+          '<button data-act="comment-open" data-id="' + escapeAttr(r.id) + '" title="Comments">💬</button>' +
           (mediaIsOwner(r) ? '<button data-act="delete-short" data-id="' + escapeAttr(r.id) + '" title="Delete">🗑</button>' : '') + '</div>' +
         '<div class="short-info"><div class="t">' + escapeHtml(r.title || 'Untitled') + '</div>' +
           '<div class="m">' + escapeHtml(r.name || 'Unknown') + ' · ' + mediaTimeAgo(r.ts) + '</div>' +
@@ -1991,6 +2021,7 @@
           if (p && p.catch) p.catch(() => { mediaMuted = true; v.muted = true; mediaSyncMuteButtons(); v.play().catch(() => {}); });
         } else {
           v.pause();
+          if (mediaCommentsCtx && mediaCommentsCtx.type === 'shorts' && en.target.contains(mediaCommentsCtx.root)) mediaCloseShortPanel();
         }
       });
     }, { root: feed, threshold: 0.7 });
@@ -2012,12 +2043,112 @@
   function mediaOnData() {
     const main = document.getElementById('media-main');
     if (!main) return;
+    if (mediaCommentsCtx && !document.body.contains(mediaCommentsCtx.root)) mediaCloseComments();
     if (mediaView === 'home') { mediaRender(); return; }
     if (mediaView === 'watch') { if (!mediaVideos[mediaWatchId]) mediaRender(); return; }
     const feed = document.getElementById('shorts-feed');
     if (!feed) { mediaRender(); return; }
     feed.querySelectorAll('.short-item').forEach((el) => { if (!mediaShorts[el.dataset.shortId]) el.remove(); });
     if (!feed.querySelector('.short-item')) mediaRender();
+  }
+
+  // ── comments ──
+  // Stored under mediaComments/{videos|shorts}/{mediaId}/{commentId}. One
+  // comments view is live at a time: under the video being watched, or in the
+  // popup panel of a single short.
+  function mediaCommentFormMarkup() {
+    return '<div class="cmt-form"><textarea class="cmt-input" maxlength="500" rows="1" placeholder="Add a comment…"></textarea>' +
+      '<button class="cmt-post" data-act="comment-post">Post</button></div><div class="cmt-err"></div>';
+  }
+
+  function mediaCloseComments() {
+    if (mediaCommentsUnsub) { try { mediaCommentsUnsub(); } catch (e) {} mediaCommentsUnsub = null; }
+    mediaCommentsCtx = null;
+    mediaCommentsData = {};
+  }
+
+  function mediaOpenComments(type, id, root) {
+    mediaCloseComments();
+    if (!db || !root) return;
+    mediaCommentsCtx = { type, id, root };
+    mediaRenderCommentList();
+    mediaCommentsUnsub = onValue(ref(db, 'mediaComments/' + type + '/' + id), (snap) => {
+      mediaCommentsData = snap.val() || {};
+      mediaRenderCommentList();
+    }, (e) => {
+      console.warn('[media] comments read failed (check Firebase rules for "mediaComments"):', e);
+      const err = root.querySelector('.cmt-err');
+      if (err) err.textContent = 'Couldn’t load comments.';
+    });
+  }
+
+  function mediaRenderCommentList() {
+    const ctx = mediaCommentsCtx;
+    if (!ctx) return;
+    const list = ctx.root.querySelector('.cmt-list');
+    if (!list) return;
+    const items = Object.entries(mediaCommentsData || {}).map(([cid, c]) => Object.assign({ cid }, c)).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+    const count = ctx.root.querySelector('.cmt-count');
+    if (count) count.textContent = items.length ? '(' + items.length + ')' : '';
+    const media = (ctx.type === 'shorts' ? mediaShorts : mediaVideos)[ctx.id];
+    const iAmPoster = !!media && mediaIsOwner(media);   // the poster can clear comments on their own video
+    const me = auth && auth.currentUser ? auth.currentUser.uid : null;
+    list.innerHTML = items.length ? items.map((c) =>
+      '<div class="cmt"><div class="cmt-meta"><b>' + escapeHtml(c.name || 'Unknown') + '</b> · ' + mediaTimeAgo(c.ts) +
+        ((iAmPoster || (me && c.uid === me)) ? '<button class="cmt-del" data-act="comment-delete" data-id="' + escapeAttr(c.cid) + '">Delete</button>' : '') +
+      '</div><div class="cmt-text">' + escapeHtml(c.text || '') + '</div></div>').join('')
+      : '<div class="cmt-empty">No comments yet — be the first.</div>';
+  }
+
+  async function mediaPostComment() {
+    const ctx = mediaCommentsCtx;
+    if (!ctx) return;
+    const input = ctx.root.querySelector('.cmt-input');
+    const err = ctx.root.querySelector('.cmt-err');
+    const btn = ctx.root.querySelector('[data-act="comment-post"]');
+    const text = ((input && input.value) || '').trim();
+    if (!text) return;
+    const user = auth && auth.currentUser;
+    if (!db || !chatName || !user) { if (err) err.textContent = 'Sign in with Google to comment.'; return; }
+    if (err) err.textContent = '';
+    if (btn) btn.disabled = true;
+    try {
+      await push(ref(db, 'mediaComments/' + ctx.type + '/' + ctx.id), { text: text.slice(0, 500), name: chatName, uid: user.uid, ts: Date.now() });
+      if (mediaCommentsCtx === ctx && input) input.value = '';
+    } catch (e) {
+      console.warn('[media] comment failed:', e);
+      if (err) err.textContent = 'Couldn’t post your comment — check the Firebase rules for “mediaComments”.';
+    }
+    if (btn) btn.disabled = false;
+  }
+
+  async function mediaDeleteComment(cid) {
+    const ctx = mediaCommentsCtx;
+    if (!ctx || !cid) return;
+    try { await remove(ref(db, 'mediaComments/' + ctx.type + '/' + ctx.id + '/' + cid)); }
+    catch (e) { console.warn('[media] comment delete failed:', e); alert('Couldn’t delete that comment.'); }
+  }
+
+  // Shorts: the 💬 button pops a comments panel up over the bottom of that short.
+  function mediaCloseShortPanel() {
+    document.querySelectorAll('#media-main .cmt-panel').forEach((p) => p.remove());
+    if (mediaCommentsCtx && mediaCommentsCtx.type === 'shorts') mediaCloseComments();
+  }
+  function mediaToggleShortComments(btn) {
+    const box = btn.closest('.short-box');
+    if (!box) return;
+    const wasOpen = !!box.querySelector('.cmt-panel');
+    mediaCloseShortPanel();
+    if (wasOpen) return;
+    const panel = document.createElement('div');
+    panel.className = 'cmt-panel';
+    panel.innerHTML = '<div class="cmt-top"><div class="cmt-head">Comments <span class="cmt-count"></span></div>' +
+      '<button class="cmt-close" data-act="comment-close" title="Close">✕</button></div>' +
+      '<div class="cmt-list"></div><div class="cmt-err"></div>' + mediaCommentFormMarkup().replace('<div class="cmt-err"></div>', '');
+    box.appendChild(panel);
+    mediaOpenComments('shorts', btn.dataset.id, panel);
+    const inp = panel.querySelector('.cmt-input');
+    if (inp) inp.focus();
   }
 
   // ── navigation ──
@@ -2031,6 +2162,7 @@
   };
   window.mediaPauseAll = function () {
     document.querySelectorAll('#page-media video').forEach((v) => v.pause());
+    mediaCloseComments();
   };
 
   function mediaApplySidebarState() {
@@ -2075,6 +2207,7 @@
     if (!rec) return;
     if (!confirm('Delete “' + (rec.title || 'this') + '”? This can’t be undone.')) return;
     try {
+      try { await remove(ref(db, 'mediaComments/' + type + '/' + id)); } catch (e) { console.warn('[media] comment cleanup failed:', e); }
       await remove(ref(db, 'media/' + type + '/' + id));
     } catch (e) {
       console.warn('[media] delete failed:', e);
@@ -2264,7 +2397,15 @@
       else if (act === 'delete-video') mediaDelete('videos', id);
       else if (act === 'delete-short') mediaDelete('shorts', id);
       else if (act === 'mute') mediaToggleMute();
+      else if (act === 'comment-post') mediaPostComment();
+      else if (act === 'comment-delete') mediaDeleteComment(id);
+      else if (act === 'comment-open') mediaToggleShortComments(t);
+      else if (act === 'comment-close') mediaCloseShortPanel();
       else if (act === 'toggle-play') { if (t.paused) t.play().catch(() => {}); else t.pause(); }
+    });
+    // Enter posts a comment (Shift+Enter adds a new line).
+    main.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey && e.target.classList && e.target.classList.contains('cmt-input')) { e.preventDefault(); mediaPostComment(); }
     });
   })();
   // ── END MEDIA ──
